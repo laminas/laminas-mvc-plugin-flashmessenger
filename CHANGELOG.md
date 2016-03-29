@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.1.0 - 2016-03-24
+## 0.1.0 - 2016-03-28
 
 First (stable) release.
 
