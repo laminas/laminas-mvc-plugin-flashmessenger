@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.1.1 - TBD
+## 1.0.0 - 2016-05-31
+
+First stable release.
 
 ### Added
 
@@ -18,7 +20,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#2](https://github.com/zendframework/zend-mvc-plugin-flashmessenger/pull/2)
+  updates the minimum PHP version to 5.6.
+- [#2](https://github.com/zendframework/zend-mvc-plugin-flashmessenger/pull/2)
+  pins the component to zend-mvc 3.0 stable, and marks v2 releases as conflicts.
 
 ## 0.1.0 - 2016-03-28
 
