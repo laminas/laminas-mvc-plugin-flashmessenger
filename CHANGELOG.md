@@ -30,7 +30,7 @@ First stable release.
 
 ### Added
 
-- Nothing.
+- View Helper plugin [ported](https://github.com/zendframework/zend-mvc-plugin-flashmessenger/issues/3) from Zend View
 
 ### Deprecated
 
