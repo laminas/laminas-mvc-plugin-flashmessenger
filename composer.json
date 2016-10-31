@@ -19,11 +19,13 @@
         "php": "^5.6 || ^7.0",
         "zendframework/zend-mvc": "^3.0",
         "zendframework/zend-session": "^2.8.5",
-        "zendframework/zend-stdlib": "^2.7 || ^3.0"
+        "zendframework/zend-stdlib": "^2.7 || ^3.0",
+        "zendframework/zend-view": "^2.10"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4",
-        "zendframework/zend-coding-standard": "~1.0.0"
+        "zendframework/zend-coding-standard": "~1.0.0",
+        "zendframework/zend-i18n": "^2.6"
     },
     "conflict": {
         "zendframework/zend-mvc": "<3.0.0"
@@ -49,6 +51,9 @@
         "zf": {
             "component": "Zend\\Mvc\\Plugin\\FlashMessenger"
         }
+    },
+    "suggests": {
+        "zendframework/zend-i18n": "Zend\\I18n component"
     },
     "scripts": {
         "check": [
