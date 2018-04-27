@@ -287,8 +287,8 @@ class FlashMessengerTest extends TestCase
         $helper->addMessage('foo');
         $helper->addMessage('bar', null, 2);
         $helper->addMessage('baz', null, 5);
-        $this->assertCount('3', $helper->getCurrentMessages());
+        $this->assertCount(3, $helper->getCurrentMessages());
         $helper->clearCurrentMessages();
-        $this->assertCount('0', $helper->getCurrentMessages());
+        $this->assertCount(0, $helper->getCurrentMessages());
     }
 }
