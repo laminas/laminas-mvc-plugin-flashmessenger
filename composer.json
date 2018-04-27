@@ -1,29 +1,19 @@
 {
     "name": "zendframework/zend-mvc-plugin-flashmessenger",
-    "description": " ",
+    "description": "Plugin for creating and exposing flash messages via zend-mvc controllers",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "zf",
+        "zendframework",
         "mvc"
     ],
-    "homepage": "https://github.com/zendframework/zend-mvc-plugin-flashmessenger",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "zf": {
-            "component": "Zend\\Mvc\\Plugin\\FlashMessenger"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Zend\\Mvc\\Plugin\\FlashMessenger\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Mvc\\Plugin\\FlashMessenger\\": "test/"
-        }
+    "support": {
+        "docs": "https://docs.zendframework.com/zend-mvc-plugin-flashmessenger/",
+        "issues": "https://github.com/zendframework/zend-mvc-plugin-flashmessenger/issues",
+        "source": "https://github.com/zendframework/zend-mvc-plugin-flashmessenger",
+        "rss": "https://github.com/zendframework/zend-mvc-plugin-flashmessenger/releases.atom",
+        "chat": "https://zendframework-slack.herokuapp.com",
+        "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
         "php": "^5.6 || ^7.0",
@@ -38,15 +28,36 @@
     "conflict": {
         "zendframework/zend-mvc": "<3.0.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Zend\\Mvc\\Plugin\\FlashMessenger\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendTest\\Mvc\\Plugin\\FlashMessenger\\": "test/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev",
+            "dev-develop": "1.1.x-dev"
+        },
+        "zf": {
+            "component": "Zend\\Mvc\\Plugin\\FlashMessenger"
+        }
+    },
     "scripts": {
         "check": [
             "@cs-check",
             "@test"
         ],
-        "upload-coverage": "coveralls",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "test": "phpunit",
-        "test-coverage": "phpunit --coverage-clover clover.xml"
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }
