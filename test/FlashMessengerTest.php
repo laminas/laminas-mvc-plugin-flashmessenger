@@ -88,9 +88,9 @@ class FlashMessengerTest extends TestCase
 
     public function testAddingMessagesDoesNotChangeCount()
     {
-        $this->assertEquals(0, count($this->helper));
+        $this->assertCount(0, $this->helper);
         $this->helper->addMessage('foo');
-        $this->assertEquals(0, count($this->helper));
+        $this->assertCount(0, $this->helper);
     }
 
     public function testCanClearMessages()
@@ -136,44 +136,44 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
         $this->assertTrue($this->helper->hasMessages());
         $messages = $this->helper->getMessages();
-        $this->assertEquals(2, count($messages));
+        $this->assertCount(2, $messages);
         $this->assertContains('foo', $messages);
         $this->assertContains('bar', $messages);
 
         $messages = $this->helper->getInfoMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getMessagesFromNamespace(FlashMessenger::NAMESPACE_INFO);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getMessages(FlashMessenger::NAMESPACE_INFO);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getSuccessMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getMessagesFromNamespace(FlashMessenger::NAMESPACE_SUCCESS);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getMessages(FlashMessenger::NAMESPACE_SUCCESS);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getErrorMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
 
         $messages = $this->helper->getMessagesFromNamespace(FlashMessenger::NAMESPACE_ERROR);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
 
         $messages = $this->helper->getMessages(FlashMessenger::NAMESPACE_ERROR);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
     }
 
@@ -181,44 +181,44 @@ class FlashMessengerTest extends TestCase
     {
         $this->seedMessages();
         $messages = $this->helper->getCurrentMessages();
-        $this->assertEquals(2, count($messages));
+        $this->assertCount(2, $messages);
         $this->assertContains('foo', $messages);
         $this->assertContains('bar', $messages);
 
         $messages = $this->helper->getCurrentInfoMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getCurrentMessagesFromNamespace(FlashMessenger::NAMESPACE_INFO);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getCurrentMessages(FlashMessenger::NAMESPACE_INFO);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-info', $messages);
 
         $messages = $this->helper->getCurrentSuccessMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getCurrentMessagesFromNamespace(FlashMessenger::NAMESPACE_SUCCESS);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getCurrentMessages(FlashMessenger::NAMESPACE_SUCCESS);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-success', $messages);
 
         $messages = $this->helper->getCurrentErrorMessages();
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
 
         $messages = $this->helper->getCurrentMessagesFromNamespace(FlashMessenger::NAMESPACE_ERROR);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
 
         $messages = $this->helper->getCurrentMessages(FlashMessenger::NAMESPACE_ERROR);
-        $this->assertEquals(1, count($messages));
+        $this->assertCount(1, $messages);
         $this->assertContains('bar-error', $messages);
     }
 
@@ -278,7 +278,7 @@ class FlashMessengerTest extends TestCase
     public function testCountIsOfMessages()
     {
         $this->seedMessages();
-        $this->assertEquals(2, count($this->helper));
+        $this->assertCount(2, $this->helper);
     }
 
     public function testAddMessageWithLoops()
@@ -287,8 +287,8 @@ class FlashMessengerTest extends TestCase
         $helper->addMessage('foo');
         $helper->addMessage('bar', null, 2);
         $helper->addMessage('baz', null, 5);
-        $this->assertEquals('3', count($helper->getCurrentMessages()));
+        $this->assertCount('3', $helper->getCurrentMessages());
         $helper->clearCurrentMessages();
-        $this->assertEquals('0', count($helper->getCurrentMessages()));
+        $this->assertCount('0', $helper->getCurrentMessages());
     }
 }
