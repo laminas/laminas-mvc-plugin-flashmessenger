@@ -7,14 +7,14 @@
 
 namespace ZendTest\Mvc\Plugin\FlashMessenger;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Zend\Session\ManagerInterface;
 use Zend\Session\SessionManager;
 
 class FlashMessengerTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         $this->helper  = new FlashMessenger();
     }
@@ -39,7 +39,7 @@ class FlashMessengerTest extends TestCase
 
     public function testSessionManagerIsMutable()
     {
-        $session = $this->getMock(ManagerInterface::class);
+        $session = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $currentSessionManager = $this->helper->getSessionManager();
 
         $this->helper->setSessionManager($session);
