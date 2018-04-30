@@ -42,7 +42,7 @@ class Module
                 ],
                 'factories' => [
                     View\Helper\FlashMessenger::class => View\Helper\FlashMessengerFactory::class,
-                    View\Helper\FlashMessengerFactory::class =>InvokableFactory::class,
+                    View\Helper\FlashMessengerFactory::class => InvokableFactory::class,
                     'zendviewhelperflashmessenger' => View\Helper\FlashMessengerFactory::class,
                 ]
             ]

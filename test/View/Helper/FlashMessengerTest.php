@@ -1,15 +1,14 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendTest\Mvc\Plugin\FlashMessenger\View\Helper;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use Zend\I18n\Translator\Translator;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
@@ -19,12 +18,6 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 use Zend\ServiceManager\ServiceManager;
 use Zend\View\HelperPluginManager;
 
-/**
- * Test class for Zend\View\Helper\Cycle.
- *
- * @group      Zend_View
- * @group      Zend_View_Helper
- */
 class FlashMessengerTest extends TestCase
 {
     private $mvcPluginClass;
@@ -70,17 +63,17 @@ class FlashMessengerTest extends TestCase
                 'ControllerPluginManager' => function ($services, $name, $options) {
                     return new PluginManager($services, [
                         'aliases' => [
-                            'flashmessenger'      => $this->mvcPluginClass,
+                            'flashmessenger' => $this->mvcPluginClass,
                         ],
                         'factories' => [
-                            $this->mvcPluginClass => InvokableFactory::class
-                        ]
+                            $this->mvcPluginClass => InvokableFactory::class,
+                        ],
                     ]);
                 },
                 'ViewHelperManager' => function ($services, $name, $options) {
                     return new HelperPluginManager($services, [
                         'factories' => [
-                            'flashmessenger' => FlashMessengerFactory::class
+                            'flashmessenger' => FlashMessengerFactory::class,
                         ],
                     ]);
                 },
@@ -249,10 +242,10 @@ class FlashMessengerTest extends TestCase
 
         $displayInfoAssertion = '<div class="foo-baz foo-bar"><p>bar-info</p></div>';
         $displayInfo = $this->helper
-                ->setMessageOpenFormat('<div%s><p>')
-                ->setMessageSeparatorString('</p><p>')
-                ->setMessageCloseString('</p></div>')
-                ->render('info', ['foo-baz', 'foo-bar']);
+            ->setMessageOpenFormat('<div%s><p>')
+            ->setMessageSeparatorString('</p><p>')
+            ->setMessageCloseString('</p></div>')
+            ->render('info', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -262,10 +255,10 @@ class FlashMessengerTest extends TestCase
 
         $displayInfoAssertion = '<div class="foo-baz foo-bar"><p>bar-info</p></div>';
         $displayInfo = $this->helper
-                ->setMessageOpenFormat('<div%s><p>')
-                ->setMessageSeparatorString('</p><p>')
-                ->setMessageCloseString('</p></div>')
-                ->renderCurrent('info', ['foo-baz', 'foo-bar']);
+            ->setMessageOpenFormat('<div%s><p>')
+            ->setMessageSeparatorString('</p><p>')
+            ->setMessageCloseString('</p></div>')
+            ->renderCurrent('info', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -275,10 +268,10 @@ class FlashMessengerTest extends TestCase
 
         $displayInfoAssertion = '<div><p class="foo-baz foo-bar">foo</p><p class="foo-baz foo-bar">bar</p></div>';
         $displayInfo = $this->helper
-                ->setMessageOpenFormat('<div><p%s>')
-                ->setMessageSeparatorString('</p><p%s>')
-                ->setMessageCloseString('</p></div>')
-                ->render('default', ['foo-baz', 'foo-bar']);
+            ->setMessageOpenFormat('<div><p%s>')
+            ->setMessageSeparatorString('</p><p%s>')
+            ->setMessageCloseString('</p></div>')
+            ->render('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -288,10 +281,10 @@ class FlashMessengerTest extends TestCase
 
         $displayInfoAssertion = '<div><p class="foo-baz foo-bar">foo</p><p class="foo-baz foo-bar">bar</p></div>';
         $displayInfo = $this->helper
-                ->setMessageOpenFormat('<div><p%s>')
-                ->setMessageSeparatorString('</p><p%s>')
-                ->setMessageCloseString('</p></div>')
-                ->renderCurrent('default', ['foo-baz', 'foo-bar']);
+            ->setMessageOpenFormat('<div><p%s>')
+            ->setMessageSeparatorString('</p><p%s>')
+            ->setMessageCloseString('</p></div>')
+            ->renderCurrent('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -356,7 +349,10 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $displayInfoAssertion = '<div><ul><li class="foo-baz foo-bar">foo</li><li class="foo-baz foo-bar">bar</li></ul></div>';
+        $displayInfoAssertion = '<div><ul>'
+            . '<li class="foo-baz foo-bar">foo</li>'
+            . '<li class="foo-baz foo-bar">bar</li>'
+            . '</ul></div>';
         $displayInfo = $helper->render('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
@@ -378,17 +374,21 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $displayInfoAssertion = '<div><ul><li class="foo-baz foo-bar">foo</li><li class="foo-baz foo-bar">bar</li></ul></div>';
+        $displayInfoAssertion = '<div><ul>'
+            . '<li class="foo-baz foo-bar">foo</li>'
+            . '<li class="foo-baz foo-bar">bar</li>'
+            . '</ul></div>';
         $displayInfo = $helper->renderCurrent('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
     public function testCanTranslateMessages()
     {
-        $mockTranslator = $this->getMock('Zend\I18n\Translator\Translator');
-        $mockTranslator->expects($this->exactly(1))
-        ->method('translate')
-        ->will($this->returnValue('translated message'));
+        $mockTranslator = $this->getMockBuilder(Translator::class)->getMock();
+        $mockTranslator
+            ->expects($this->exactly(1))
+            ->method('translate')
+            ->will($this->returnValue('translated message'));
 
         $this->helper->setTranslator($mockTranslator);
         $this->assertTrue($this->helper->hasTranslator());
@@ -402,10 +402,11 @@ class FlashMessengerTest extends TestCase
 
     public function testCanTranslateCurrentMessages()
     {
-        $mockTranslator = $this->getMock('Zend\I18n\Translator\Translator');
-        $mockTranslator->expects($this->exactly(1))
-        ->method('translate')
-        ->will($this->returnValue('translated message'));
+        $mockTranslator = $this->getMockBuilder(Translator::class)->getMock();
+        $mockTranslator
+            ->expects($this->exactly(1))
+            ->method('translate')
+            ->will($this->returnValue('translated message'));
 
         $this->helper->setTranslator($mockTranslator);
         $this->assertTrue($this->helper->hasTranslator());

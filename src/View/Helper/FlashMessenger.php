@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      http://github.com/zendframework/zend-view for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
 namespace Zend\Mvc\Plugin\FlashMessenger\View\Helper;
@@ -17,7 +17,6 @@ use Zend\View\Helper\TranslatorAwareTrait;
  * Helper to proxy the plugin flash messenger
  *
  * Duck-types against Zend\I18n\Translator\TranslatorAwareInterface.
- *
  */
 class FlashMessenger extends AbstractHelper
 {
@@ -336,7 +335,7 @@ class FlashMessenger extends AbstractHelper
             $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
         }
 
-        if (!$this->escapeHtmlHelper instanceof EscapeHtml) {
+        if (! $this->escapeHtmlHelper instanceof EscapeHtml) {
             $this->escapeHtmlHelper = new EscapeHtml();
         }
 
