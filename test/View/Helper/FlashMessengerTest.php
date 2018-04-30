@@ -434,7 +434,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render;
+     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
     public function testMessageIsEscapedByDefault()
     {
