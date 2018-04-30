@@ -2,6 +2,7 @@ docs_dir: docs/book
 site_dir: docs/html
 pages:
     - index.md
+    - View Helper: flash-messenger-view-helper.md
 site_name: zend-mvc-plugin-flashmessenger
 site_description: 'zend-mvc-plugin-flashmessenger: Flash messages for zend-mvc controllers'
 repo_url: 'https://github.com/zendframework/zend-mvc-plugin-flashmessenger'
