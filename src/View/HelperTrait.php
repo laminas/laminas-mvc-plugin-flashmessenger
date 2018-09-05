@@ -24,7 +24,7 @@ use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
  *
  * @example @var \Zend\View\Renderer\PhpRenderer|\Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
  *
- * @method FlashMessenger|PluginFlashMessenger flashMessenger($namespace = null)
+ * @method FlashMessenger|PluginFlashMessenger flashMessenger(string|null $namespace = null)
  */
 trait HelperTrait
 {
