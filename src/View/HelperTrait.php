@@ -11,7 +11,7 @@ use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
 
 /**
- * Trait HelperTrait
+ * Helper trait for auto-completion of code in modern IDEs.
  *
  * The trait provides convenience methods for view helpers,
  * defined by the zend-mvc-plugin-flashmessenger component.
