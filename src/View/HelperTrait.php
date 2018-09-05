@@ -20,7 +20,7 @@ use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
  *
  * The base class is PhpRenderer, followed by the helper trait from
  * the zend-mvc-plugin-flashmessenger component. However, multiple helper traits
- * from different Zend components can be chained afterwards.
+ * from different Zend Framework components can be chained afterwards.
  *
  * @example @var \Zend\View\Renderer\PhpRenderer|\Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
  *
