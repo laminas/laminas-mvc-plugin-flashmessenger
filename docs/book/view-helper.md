@@ -1,7 +1,7 @@
 # FlashMessenger View Helper
 
 The `FlashMessenger` helper is used to render the messages of the
-[FlashMessenger controller plugin](flash-messenger-plugin.md).
+[FlashMessenger controller plugin](controller-plugin.md).
 
 ## Basic Usage
 
@@ -22,7 +22,7 @@ which translates to `default`.
 // Usable in any of your .phtml files
 echo $this->flashMessenger()->render('error');
 
-// Alternatively use one of the pre-defined namespaces 
+// Alternatively use one of the pre-defined namespaces
 // (aka: use Zend\Mvc\Controller\Plugin\FlashMessenger;)
 echo $this->flashMessenger()->render(FlashMessenger::NAMESPACE_SUCCESS);
 ```
@@ -105,10 +105,10 @@ $flash->setMessageOpenFormat('<div%s>
     ->setMessageSeparatorString('</li><li>')
     ->setMessageCloseString('</li></ul></div>');
 
-echo $flash->render('error',   array('alert', 'alert-dismissible', 'alert-danger'));
-echo $flash->render('info',    array('alert', 'alert-dismissible', 'alert-info'));
-echo $flash->render('default', array('alert', 'alert-dismissible', 'alert-warning'));
-echo $flash->render('success', array('alert', 'alert-dismissible', 'alert-success'));
+echo $flash->render('error',   ['alert', 'alert-dismissible', 'alert-danger']);
+echo $flash->render('info',    ['alert', 'alert-dismissible', 'alert-info']);
+echo $flash->render('default', ['alert', 'alert-dismissible', 'alert-warning']);
+echo $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']);
 ```
 
 The output of the above example would create dismissable `FlashMessages` with
@@ -144,3 +144,27 @@ data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
     ],
 ],
 ```
+
+## IDE auto-completion in templates
+
+The `Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to
+provide auto-completion for modern IDEs. It defines the aliases of the view
+helpers in a DocBlock as `@method` tags.
+
+### Usage
+
+In order to allow auto-completion in templates, `$this` variable should be
+type-hinted via a DocBlock at the top of your template. It is recommended that
+you always add the `Zend\View\Renderer\PhpRenderer` as the first type, so that
+the IDE can auto-suggest the default view helpers from `zend-view`. Next, chain
+the `HelperTrait` from `zend-i18n` with a pipe symbol (a.k.a. vertical bar) `|`:
+
+```php
+/**
+ * @var Zend\View\Renderer\PhpRenderer|Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
+ */
+```
+
+You may chain as many `HelperTrait` traits as you like, depending on view
+helpers from which Zend Framework component you are using and would like to
+provide auto-completion for.
