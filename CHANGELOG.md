@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#22](https://github.com/zendframework/zend-mvc-plugin-flashmessenger/pull/22) adds `Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait`,
   which can be used to provide IDE autocompletion for view helpers
   provided by zend-mvc-plugin-flashmessenger. See
-  https://docs.zendframework.com/zend-mvc-plugin-flashmessenger/flash-messenger-view-helper/#ide-auto-completion-in-templates
+  https://docs.zendframework.com/zend-mvc-plugin-flashmessenger/view-helper/#ide-auto-completion-in-templates
   for more information.
 
 ### Changed
