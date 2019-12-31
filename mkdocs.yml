@@ -4,8 +4,8 @@ nav:
     - Home: index.md
     - "Controller Plugin": controller-plugin.md
     - "View Helper": view-helper.md
-site_name: zend-mvc-plugin-flashmessenger
-site_description: 'Plugin for creating and exposing flash messages via zend-mvc controllers'
-repo_url: 'https://github.com/zendframework/zend-mvc-plugin-flashmessenger'
+site_name: laminas-mvc-plugin-flashmessenger
+site_description: 'Plugin for creating and exposing flash messages via laminas-mvc controllers'
+repo_url: 'https://github.com/laminas/laminas-mvc-plugin-flashmessenger'
 extra:
     show_special_homepage: true
