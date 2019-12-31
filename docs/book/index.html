@@ -1,10 +1,10 @@
 <div class="container">
   <div class="jumbotron">
-    <h1>zend-mvc-plugin-flashmessenger</h1>
+    <h1>laminas-mvc-plugin-flashmessenger</h1>
 
-    <p>Plugin for creating and exposing flash messages via zend-mvc controllers.</p>
+    <p>Plugin for creating and exposing flash messages via laminas-mvc controllers.</p>
 
-    <pre><code class="language-bash">$ composer require zendframework/zend-mvc-plugin-flashmessenger</code></pre>
+    <pre><code class="language-bash">$ composer require laminas/laminas-mvc-plugin-flashmessenger</code></pre>
   </div>
 </div>
 
@@ -22,17 +22,17 @@
           </p>
 
           <pre><code class="lang-bash" data-trim>
-$ composer require zendframework/zend-mvc-plugin-flashmessenger
+$ composer require laminas/laminas-mvc-plugin-flashmessenger
           </code></pre>
 
           <p>
-            If you are using the <a href="https://docs.zendframework.com/zend-component-installer">zend-component-installer</a>,
+            If you are using the <a href="https://docs.laminas.dev/laminas-component-installer">laminas-component-installer</a>,
             you're done!
           </p>
 
           <p>
             If not, you will need to add the component as a module to your
-            application. Add the entry <code>'Zend\Mvc\Plugin\FlashMessenger'</code> to
+            application. Add the entry <code>'Laminas\Mvc\Plugin\FlashMessenger'</code> to
             your list of modules in your application configuration (typically
             one of <code>config/application.config.php</code> or
             <code>config/modules.config.php</code>).
@@ -52,18 +52,18 @@ $ composer require zendframework/zend-mvc-plugin-flashmessenger
 
       <ul>
         <li>
-          <code>setSessionManager(Zend\Session\ManagerInterface $manager) : FlashMessenger</code>:
+          <code>setSessionManager(Laminas\Session\ManagerInterface $manager) : FlashMessenger</code>:
           Allows you to specify an alternate session manager, if desired.
         </li>
 
         <li>
-          <code>getSessionManager() : Zend\Session\ManagerInterface</code>:
+          <code>getSessionManager() : Laminas\Session\ManagerInterface</code>:
           Allows you to retrieve the session manager registered.
         </li>
 
         <li>
-          <code>getContainer() : Zend\Session\Container</code>: Returns the
-          <code>Zend\Session\Container</code> instance in which the flash
+          <code>getContainer() : Laminas\Session\Container</code>: Returns the
+          <code>Laminas\Session\Container</code> instance in which the flash
           messages are stored.
         </li>
 

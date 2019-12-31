@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Mvc\Plugin\FlashMessenger\View\Helper;
+namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class FlashMessengerFactory implements FactoryInterface
 {
@@ -23,7 +24,7 @@ class FlashMessengerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
-        // test if we are using Zend\ServiceManager v2 or v3
+        // test if we are using Laminas\ServiceManager v2 or v3
         if (! method_exists($container, 'configure')) {
             $container = $container->getServiceLocator();
         }

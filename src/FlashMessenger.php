@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Mvc\Plugin\FlashMessenger;
+namespace Laminas\Mvc\Plugin\FlashMessenger;
 
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\Session\Container;
-use Zend\Session\ManagerInterface as Manager;
-use Zend\Stdlib\SplQueue;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Session\Container;
+use Laminas\Session\ManagerInterface as Manager;
+use Laminas\Stdlib\SplQueue;
 
 /**
  * Flash Messenger - implement session-based messages

@@ -1,22 +1,23 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Mvc\Plugin\FlashMessenger\View\Helper;
+namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
-use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
-use Zend\View\Exception\InvalidArgumentException;
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
-use Zend\View\Helper\TranslatorAwareTrait;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
+use Laminas\View\Exception\InvalidArgumentException;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\View\Helper\EscapeHtml;
+use Laminas\View\Helper\TranslatorAwareTrait;
 
 /**
  * Helper to proxy the plugin flash messenger
  *
- * Duck-types against Zend\I18n\Translator\TranslatorAwareInterface.
+ * Duck-types against Laminas\I18n\Translator\TranslatorAwareInterface.
  */
 class FlashMessenger extends AbstractHelper
 {
