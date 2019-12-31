@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Mvc\Plugin\FlashMessenger;
+namespace LaminasTest\Mvc\Plugin\FlashMessenger;
 
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Laminas\Session\ManagerInterface;
+use Laminas\Session\SessionManager;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
-use Zend\Session\ManagerInterface;
-use Zend\Session\SessionManager;
 
 class FlashMessengerTest extends TestCase
 {
