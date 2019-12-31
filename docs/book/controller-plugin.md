@@ -3,14 +3,14 @@
 The `FlashMessenger` controller plugin is designed to create and retrieve
 self-expiring, session-based messages. It exposes a number of methods:
 
-- `setSessionManager(Zend\Session\ManagerInterface $manager) : FlashMessenger`:
+- `setSessionManager(Laminas\Session\ManagerInterface $manager) : FlashMessenger`:
   Allows you to specify an alternate session manager, if desired.
 
-- `getSessionManager() : Zend\Session\ManagerInterface`: Allows you to retrieve
+- `getSessionManager() : Laminas\Session\ManagerInterface`: Allows you to retrieve
   the session manager registered.
 
-- `getContainer() : Zend\Session\Container`: Returns the
-  `Zend\Session\Container` instance in which the flash messages are stored.
+- `getContainer() : Laminas\Session\Container`: Returns the
+  `Laminas\Session\Container` instance in which the flash messages are stored.
 
 - `setNamespace(string $namespace = 'default') : FlashMessenger`:
   Allows you to specify a specific namespace in the container in which to store

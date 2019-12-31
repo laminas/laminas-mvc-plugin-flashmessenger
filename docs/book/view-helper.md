@@ -15,7 +15,7 @@ echo $this->flashMessenger()->render();
 
 The first argument of the `render()` function is the `namespace`. If no
 `namespace` is defined, the default
-`Zend\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_DEFAULT` will be used,
+`Laminas\Mvc\Controller\Plugin\FlashMessenger::NAMESPACE_DEFAULT` will be used,
 which translates to `default`.
 
 ```php
@@ -23,7 +23,7 @@ which translates to `default`.
 echo $this->flashMessenger()->render('error');
 
 // Alternatively use one of the pre-defined namespaces
-// (aka: use Zend\Mvc\Controller\Plugin\FlashMessenger;)
+// (aka: use Laminas\Mvc\Controller\Plugin\FlashMessenger;)
 echo $this->flashMessenger()->render(FlashMessenger::NAMESPACE_SUCCESS);
 ```
 
@@ -58,7 +58,7 @@ distinct visuals for your flash messages. The default output format is defined
 within the source code of the `FlashMessenger` view helper itself.
 
 ```php
-// Zend/View/Helper/FlashMessenger.php#L41-L43
+// Laminas/View/Helper/FlashMessenger.php#L41-L43
 protected $messageCloseString     = '</li></ul>';
 protected $messageOpenFormat      = '<ul%s><li>';
 protected $messageSeparatorString = '</li><li>';
@@ -129,7 +129,7 @@ only having different CSS classes applied.
 
 ## Alternative Configuration of the ViewHelper Layout
 
-`Zend\View\Helper\Service\FlashMessengerFactory` checks the application
+`Laminas\View\Helper\Service\FlashMessengerFactory` checks the application
 configuration, making it possible to set up the `FlashMessenger` strings through
 your `module.config.php`, too. The next example will set up the output to be
 identical with the above Twitter Bootstrap 3 Example
@@ -147,7 +147,7 @@ data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
 
 ## IDE auto-completion in templates
 
-The `Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to
+The `Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to
 provide auto-completion for modern IDEs. It defines the aliases of the view
 helpers in a DocBlock as `@method` tags.
 
@@ -155,16 +155,16 @@ helpers in a DocBlock as `@method` tags.
 
 In order to allow auto-completion in templates, `$this` variable should be
 type-hinted via a DocBlock at the top of your template. It is recommended that
-you always add the `Zend\View\Renderer\PhpRenderer` as the first type, so that
-the IDE can auto-suggest the default view helpers from `zend-view`. Next, chain
-the `HelperTrait` from `zend-i18n` with a pipe symbol (a.k.a. vertical bar) `|`:
+you always add the `Laminas\View\Renderer\PhpRenderer` as the first type, so that
+the IDE can auto-suggest the default view helpers from `laminas-view`. Next, chain
+the `HelperTrait` from `laminas-i18n` with a pipe symbol (a.k.a. vertical bar) `|`:
 
 ```php
 /**
- * @var Zend\View\Renderer\PhpRenderer|Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
+ * @var Laminas\View\Renderer\PhpRenderer|Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
  */
 ```
 
 You may chain as many `HelperTrait` traits as you like, depending on view
-helpers from which Zend Framework component you are using and would like to
+helpers from which Laminas component you are using and would like to
 provide auto-completion for.
