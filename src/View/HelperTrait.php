@@ -1,28 +1,29 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Mvc\Plugin\FlashMessenger\View;
+namespace Laminas\Mvc\Plugin\FlashMessenger\View;
 
-use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
-use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
 
 /**
  * Helper trait for auto-completion of code in modern IDEs.
  *
  * The trait provides convenience methods for view helpers,
- * defined by the zend-mvc-plugin-flashmessenger component.
+ * defined by the laminas-mvc-plugin-flashmessenger component.
  * It is designed to be used for type-hinting $this variable
- * inside zend-view templates via doc blocks.
+ * inside laminas-view templates via doc blocks.
  *
  * The base class is PhpRenderer, followed by the helper trait from
- * the zend-mvc-plugin-flashmessenger component. However, multiple helper traits
- * from different Zend Framework components can be chained afterwards.
+ * the laminas-mvc-plugin-flashmessenger component. However, multiple helper traits
+ * from different Laminas components can be chained afterwards.
  *
- * @example @var \Zend\View\Renderer\PhpRenderer|\Zend\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
+ * @example @var \Laminas\View\Renderer\PhpRenderer|\Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
  *
  * @method FlashMessenger|PluginFlashMessenger flashMessenger(string|null $namespace = null)
  */

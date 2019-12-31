@@ -1,22 +1,23 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Mvc\Plugin\FlashMessenger\View\Helper;
+namespace LaminasTest\Mvc\Plugin\FlashMessenger\View\Helper;
 
+use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
+use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessengerFactory;
+use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
-use Zend\I18n\Translator\Translator;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
-use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
-use Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessengerFactory;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\ServiceManager\ServiceManager;
-use Zend\View\HelperPluginManager;
 
 class FlashMessengerTest extends TestCase
 {
@@ -434,7 +435,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
     public function testMessageIsEscapedByDefault()
     {
@@ -448,7 +449,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
     public function testMessageIsNotEscapedWhenAutoEscapeIsFalse()
     {
@@ -463,7 +464,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
     public function testCanSetAutoEscapeOnRender()
     {
@@ -477,7 +478,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
     public function testRenderUsesCurrentAutoEscapeByDefault()
     {
@@ -501,7 +502,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
     public function testCurrentMessageIsEscapedByDefault()
     {
@@ -513,7 +514,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
     public function testCurrentMessageIsNotEscapedWhenAutoEscapeIsFalse()
     {
@@ -526,7 +527,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
     public function testCanSetAutoEscapeOnRenderCurrent()
     {
@@ -538,7 +539,7 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
     public function testRenderCurrentUsesCurrentAutoEscapeByDefault()
     {
