@@ -8,4 +8,6 @@ site_name: laminas-mvc-plugin-flashmessenger
 site_description: 'Plugin for creating and exposing flash messages via laminas-mvc controllers'
 repo_url: 'https://github.com/laminas/laminas-mvc-plugin-flashmessenger'
 extra:
+    project: Mvc
+    project_url: 'https://docs.laminas.dev'
     show_special_homepage: true
