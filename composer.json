@@ -64,7 +64,7 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "replace": {
-        "zendframework/zend-mvc-plugin-flashmessenger": "self.version"
+        "zendframework/zend-mvc-plugin-flashmessenger": "^1.2.0"
     },
     "suggests": {
         "laminas/laminas-i18n": "Laminas\\I18n component"
