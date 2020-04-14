@@ -45,7 +45,8 @@ class Module
                     'FlashMessenger' => View\Helper\FlashMessenger::class,
 
                     // Legacy Zend Framework aliases
-                    \Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::class => View\Helper\FlashMessenger::class,
+                    \Zend\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::class =>
+                        View\Helper\FlashMessenger::class,
                     'zendviewhelperflashmessenger' => 'laminasviewhelperflashmessenger',
 
                 ],
