@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class FlashMessengerTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->helper  = new FlashMessenger();
     }
