@@ -332,7 +332,7 @@ class FlashMessenger extends AbstractHelper
             return $this->escapeHtmlHelper;
         }
 
-        if (method_exists($this->getView(), 'plugin')) {
+        if ($this->getView() && method_exists($this->getView(), 'plugin')) {
             $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
         }
 
