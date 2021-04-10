@@ -1,7 +1,6 @@
 # laminas-mvc-plugin-flashmessenger
 
-[![Build Status](https://travis-ci.com/laminas/laminas-mvc-plugin-flashmessenger.svg?branch=master)](https://travis-ci.com/laminas/laminas-mvc-plugin-flashmessenger)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-mvc-plugin-flashmessenger/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-mvc-plugin-flashmessenger?branch=master)
+[![Build Status](https://github.com/laminas/laminas-mvc-plugin-flashmessenger/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-mvc-plugin-flashmessenger/actions?query=workflow%3A"Continuous+Integration")
 
 Flash messages [derive from Rails](http://api.rubyonrails.org/classes/ActionDispatch/Flash.html),
 and are used to expose messages from one action to the next, after which they
