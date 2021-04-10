@@ -1,7 +1,11 @@
 # FlashMessenger Controller Plugin
 
 The `FlashMessenger` controller plugin is designed to create and retrieve
-self-expiring, session-based messages. It exposes a number of methods:
+self-expiring, session-based messages.
+
+## Available Methods
+
+The plugin exposes a number of methods:
 
 - `setSessionManager(Laminas\Session\ManagerInterface $manager) : FlashMessenger`:
   Allows you to specify an alternate session manager, if desired.
@@ -76,7 +80,7 @@ Additionally, the `FlashMessenger` implements both `IteratorAggregate` and
 `Countable`, allowing you to iterate over and count the flash messages in the
 current namespace within the session container.
 
-### Examples
+## Example
 
 ```php
 public function processAction()
