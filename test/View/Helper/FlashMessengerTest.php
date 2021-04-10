@@ -17,7 +17,6 @@ use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\HelperPluginManager;
-use Laminas\View\Renderer\PhpRenderer;
 use PHPUnit\Framework\TestCase;
 
 class FlashMessengerTest extends TestCase
@@ -31,7 +30,6 @@ class FlashMessengerTest extends TestCase
         $_SESSION = [];
         $this->mvcPluginClass = PluginFlashMessenger::class;
         $this->helper = new FlashMessenger();
-        $this->helper->setView(new PhpRenderer());
         $this->plugin = $this->helper->getPluginFlashMessenger();
     }
 
@@ -310,7 +308,6 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $helper->setView(new PhpRenderer());
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
         $displayInfo = $helper->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
@@ -332,7 +329,6 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $helper->setView(new PhpRenderer());
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
         $displayInfo = $helper->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
@@ -355,7 +351,6 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $helper->setView(new PhpRenderer());
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-baz foo-bar">foo</li>'
             . '<li class="foo-baz foo-bar">bar</li>'
@@ -381,7 +376,6 @@ class FlashMessengerTest extends TestCase
         $helperPluginManager = $services->get('ViewHelperManager');
         $helper              = $helperPluginManager->get('flashmessenger');
 
-        $helper->setView(new PhpRenderer());
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-baz foo-bar">foo</li>'
             . '<li class="foo-baz foo-bar">bar</li>'
