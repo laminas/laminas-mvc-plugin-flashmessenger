@@ -25,7 +25,7 @@ class FlashMessengerTest extends TestCase
     private $plugin;
     private $helper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $_SESSION = [];
         $this->mvcPluginClass = PluginFlashMessenger::class;
