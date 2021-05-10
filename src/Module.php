@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-mvc-plugin-flashmessenger for the canonical source repository
- * @copyright https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Mvc\Plugin\FlashMessenger;
 
 use Laminas\Mvc\Plugin\FlashMessenger\View;
