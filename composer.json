@@ -1,28 +1,12 @@
 {
     "name": "laminas/laminas-mvc-plugin-flashmessenger",
     "description": "Plugin for creating and exposing flash messages via laminas-mvc controllers",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "mvc"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-mvc-plugin-flashmessenger/",
-        "issues": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger/issues",
-        "source": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger",
-        "rss": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laminas": {
-            "component": "Laminas\\Mvc\\Plugin\\FlashMessenger"
-        }
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-mvc": "^3.0",
@@ -31,13 +15,24 @@
         "laminas/laminas-view": "^2.12",
         "laminas/laminas-zendframework-bridge": "^1.0"
     },
+    "replace": {
+        "zendframework/zend-mvc-plugin-flashmessenger": "^1.2.0"
+    },
+    "conflict": {
+        "laminas/laminas-mvc": "<3.0.0"
+    },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
         "laminas/laminas-i18n": "^2.8",
         "phpunit/phpunit": "^9.3"
     },
-    "conflict": {
-        "laminas/laminas-mvc": "<3.0.0"
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "component": "Laminas\\Mvc\\Plugin\\FlashMessenger"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -59,8 +54,13 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-mvc-plugin-flashmessenger": "^1.2.0"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger",
+        "docs": "https://docs.laminas.dev/laminas-mvc-plugin-flashmessenger/",
+        "rss": "https://github.com/laminas/laminas-mvc-plugin-flashmessenger/releases.atom"
     },
     "suggests": {
         "laminas/laminas-i18n": "Laminas\\I18n component"
