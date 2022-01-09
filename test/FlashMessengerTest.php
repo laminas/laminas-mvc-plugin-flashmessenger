@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Mvc\Plugin\FlashMessenger;
 
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -37,7 +39,7 @@ class FlashMessengerTest extends TestCase
 
     public function testSessionManagerIsMutable(): void
     {
-        $session = $this->getMockBuilder(ManagerInterface::class)->getMock();
+        $session               = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $currentSessionManager = $this->helper->getSessionManager();
 
         $this->helper->setSessionManager($session);
@@ -282,7 +284,7 @@ class FlashMessengerTest extends TestCase
 
     public function testAddMessageWithLoops(): void
     {
-        $helper  = new FlashMessenger();
+        $helper = new FlashMessenger();
         $helper->addMessage('foo');
         $helper->addMessage('bar', null, 2);
         $helper->addMessage('baz', null, 5);

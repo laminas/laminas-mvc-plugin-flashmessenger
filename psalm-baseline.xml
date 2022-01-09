@@ -48,9 +48,6 @@
     <MissingClosureParamType occurrences="1">
       <code>$item</code>
     </MissingClosureParamType>
-    <MissingReturnType occurrences="1">
-      <code>getAutoEscape</code>
-    </MissingReturnType>
     <MixedArgument occurrences="2">
       <code>$item</code>
       <code>$messagesToPrint</code>

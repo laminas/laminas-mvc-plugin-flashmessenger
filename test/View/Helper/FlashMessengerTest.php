@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Mvc\Plugin\FlashMessenger\View\Helper;
 
 use Laminas\I18n\Translator\Translator;
@@ -12,10 +14,10 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
-
 use Psr\Container\ContainerInterface;
 
 use function assert;
+use function get_class;
 
 class FlashMessengerTest extends TestCase
 {
@@ -28,10 +30,10 @@ class FlashMessengerTest extends TestCase
 
     public function setUp(): void
     {
-        $_SESSION = [];
+        $_SESSION             = [];
         $this->mvcPluginClass = PluginFlashMessenger::class;
-        $this->helper = new FlashMessenger();
-        $this->plugin = $this->helper->getPluginFlashMessenger();
+        $this->helper         = new FlashMessenger();
+        $this->plugin         = $this->helper->getPluginFlashMessenger();
     }
 
     public function seedMessages(): void
@@ -59,13 +61,13 @@ class FlashMessengerTest extends TestCase
     private function createServiceManager(array $config = []): ServiceManager
     {
         $config = new Config([
-            'services' => [
+            'services'  => [
                 'config' => $config,
             ],
             'factories' => [
                 'ControllerPluginManager' => function (ContainerInterface $services) {
                     return new PluginManager($services, [
-                        'aliases' => [
+                        'aliases'   => [
                             'flashmessenger' => $this->mvcPluginClass,
                         ],
                         'factories' => [
@@ -73,19 +75,19 @@ class FlashMessengerTest extends TestCase
                         ],
                     ]);
                 },
-                'ViewHelperManager' => function (ContainerInterface $services) {
+                'ViewHelperManager'       => function (ContainerInterface $services) {
                     return new HelperPluginManager($services, [
                         'factories' => [
                             FlashMessenger::class => FlashMessengerFactory::class,
                         ],
-                        'aliases' => [
+                        'aliases'   => [
                             'flashmessenger' => FlashMessenger::class,
                         ],
                     ]);
                 },
             ],
         ]);
-        $sm = new ServiceManager();
+        $sm     = new ServiceManager();
         $config->configureServiceManager($sm);
         return $sm;
     }
@@ -191,26 +193,26 @@ class FlashMessengerTest extends TestCase
     public function testCanDisplayListOfMessages(): void
     {
         $displayInfoAssertion = '';
-        $displayInfo = $this->helper->render('info');
+        $displayInfo          = $this->helper->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
 
         $this->seedMessages();
 
         $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $displayInfo = $this->helper->render('info');
+        $displayInfo          = $this->helper->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
     public function testCanDisplayListOfCurrentMessages(): void
     {
         $displayInfoAssertion = '';
-        $displayInfo = $this->helper->renderCurrent('info');
+        $displayInfo          = $this->helper->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
 
         $this->seedCurrentMessages();
 
         $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $displayInfo = $this->helper->renderCurrent('info');
+        $displayInfo          = $this->helper->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -219,7 +221,7 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
 
         $displayInfoAssertion = '<ul class="default"><li>foo</li><li>bar</li></ul>';
-        $displayInfo = $this->helper->render();
+        $displayInfo          = $this->helper->render();
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -228,7 +230,7 @@ class FlashMessengerTest extends TestCase
         $this->seedCurrentMessages();
 
         $displayInfoAssertion = '<ul class="default"><li>foo</li><li>bar</li></ul>';
-        $displayInfo = $this->helper->renderCurrent();
+        $displayInfo          = $this->helper->renderCurrent();
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -239,7 +241,7 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
 
         $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $displayInfo = $invoked->render('info');
+        $displayInfo          = $invoked->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -249,7 +251,7 @@ class FlashMessengerTest extends TestCase
         $this->seedCurrentMessages();
 
         $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $invoked = $helper();
+        $invoked              = $helper();
         assert($invoked instanceof FlashMessenger);
         $displayInfo = $invoked->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
@@ -260,7 +262,7 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
 
         $displayInfoAssertion = '<div class="foo-baz foo-bar"><p>bar-info</p></div>';
-        $displayInfo = $this->helper
+        $displayInfo          = $this->helper
             ->setMessageOpenFormat('<div%s><p>')
             ->setMessageSeparatorString('</p><p>')
             ->setMessageCloseString('</p></div>')
@@ -273,7 +275,7 @@ class FlashMessengerTest extends TestCase
         $this->seedCurrentMessages();
 
         $displayInfoAssertion = '<div class="foo-baz foo-bar"><p>bar-info</p></div>';
-        $displayInfo = $this->helper
+        $displayInfo          = $this->helper
             ->setMessageOpenFormat('<div%s><p>')
             ->setMessageSeparatorString('</p><p>')
             ->setMessageCloseString('</p></div>')
@@ -286,7 +288,7 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
 
         $displayInfoAssertion = '<div><p class="foo-baz foo-bar">foo</p><p class="foo-baz foo-bar">bar</p></div>';
-        $displayInfo = $this->helper
+        $displayInfo          = $this->helper
             ->setMessageOpenFormat('<div><p%s>')
             ->setMessageSeparatorString('</p><p%s>')
             ->setMessageCloseString('</p></div>')
@@ -299,7 +301,7 @@ class FlashMessengerTest extends TestCase
         $this->seedCurrentMessages();
 
         $displayInfoAssertion = '<div><p class="foo-baz foo-bar">foo</p><p class="foo-baz foo-bar">bar</p></div>';
-        $displayInfo = $this->helper
+        $displayInfo          = $this->helper
             ->setMessageOpenFormat('<div><p%s>')
             ->setMessageSeparatorString('</p><p%s>')
             ->setMessageCloseString('</p></div>')
@@ -314,9 +316,9 @@ class FlashMessengerTest extends TestCase
         $config = [
             'view_helper_config' => [
                 'flashmessenger' => [
-                    'message_open_format' => '<div%s><ul><li>',
+                    'message_open_format'      => '<div%s><ul><li>',
                     'message_separator_string' => '</li><li>',
-                    'message_close_string' => '</li></ul></div>',
+                    'message_close_string'     => '</li></ul></div>',
                 ],
             ],
         ];
@@ -325,19 +327,19 @@ class FlashMessengerTest extends TestCase
         $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
-        $displayInfo = $helper->render('info');
+        $displayInfo          = $helper->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
     public function testCanDisplayListOfCurrentMessagesCustomisedByConfig(): void
     {
         $this->seedCurrentMessages();
-        $config = [
+        $config   = [
             'view_helper_config' => [
                 'flashmessenger' => [
-                    'message_open_format' => '<div%s><ul><li>',
+                    'message_open_format'      => '<div%s><ul><li>',
                     'message_separator_string' => '</li><li>',
-                    'message_close_string' => '</li></ul></div>',
+                    'message_close_string'     => '</li></ul></div>',
                 ],
             ],
         ];
@@ -345,7 +347,7 @@ class FlashMessengerTest extends TestCase
         $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
-        $displayInfo = $helper->renderCurrent('info');
+        $displayInfo          = $helper->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -353,12 +355,12 @@ class FlashMessengerTest extends TestCase
     {
         $this->seedMessages();
 
-        $config = [
+        $config   = [
             'view_helper_config' => [
                 'flashmessenger' => [
-                    'message_open_format' => '<div><ul><li%s>',
+                    'message_open_format'      => '<div><ul><li%s>',
                     'message_separator_string' => '</li><li%s>',
-                    'message_close_string' => '</li></ul></div>',
+                    'message_close_string'     => '</li></ul></div>',
                 ],
             ],
         ];
@@ -369,7 +371,7 @@ class FlashMessengerTest extends TestCase
             . '<li class="foo-baz foo-bar">foo</li>'
             . '<li class="foo-baz foo-bar">bar</li>'
             . '</ul></div>';
-        $displayInfo = $helper->render('default', ['foo-baz', 'foo-bar']);
+        $displayInfo          = $helper->render('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -377,23 +379,23 @@ class FlashMessengerTest extends TestCase
     {
         $this->seedCurrentMessages();
 
-        $config = [
+        $config   = [
             'view_helper_config' => [
                 'flashmessenger' => [
-                    'message_open_format' => '<div><ul><li%s>',
+                    'message_open_format'      => '<div><ul><li%s>',
                     'message_separator_string' => '</li><li%s>',
-                    'message_close_string' => '</li></ul></div>',
+                    'message_close_string'     => '</li></ul></div>',
                 ],
             ],
         ];
         $services = $this->createServiceManager($config);
-        $helper = $this->retrieveViewHelperFrom($services);
+        $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-baz foo-bar">foo</li>'
             . '<li class="foo-baz foo-bar">bar</li>'
             . '</ul></div>';
-        $displayInfo = $helper->renderCurrent('default', ['foo-baz', 'foo-bar']);
+        $displayInfo          = $helper->renderCurrent('default', ['foo-baz', 'foo-bar']);
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
@@ -411,7 +413,7 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
 
         $displayAssertion = '<ul class="info"><li>translated message</li></ul>';
-        $display = $this->helper->render('info');
+        $display          = $this->helper->render('info');
         $this->assertEquals($displayAssertion, $display);
     }
 
@@ -429,7 +431,7 @@ class FlashMessengerTest extends TestCase
         $this->seedCurrentMessages();
 
         $displayAssertion = '<ul class="info"><li>translated message</li></ul>';
-        $display = $this->helper->renderCurrent('info');
+        $display          = $this->helper->renderCurrent('info');
         $this->assertEquals($displayAssertion, $display);
     }
 
@@ -452,12 +454,12 @@ class FlashMessengerTest extends TestCase
      */
     public function testMessageIsEscapedByDefault(): void
     {
-        $helper = new FlashMessenger;
+        $helper = new FlashMessenger();
         $helper->addMessage('Foo<br />bar');
         unset($helper);
 
         $displayAssertion = '<ul class="default"><li>Foo&lt;br /&gt;bar</li></ul>';
-        $display = $this->helper->render('default');
+        $display          = $this->helper->render('default');
         $this->assertSame($displayAssertion, $display);
     }
 
@@ -466,12 +468,12 @@ class FlashMessengerTest extends TestCase
      */
     public function testMessageIsNotEscapedWhenAutoEscapeIsFalse(): void
     {
-        $helper = new FlashMessenger;
+        $helper = new FlashMessenger();
         $helper->addMessage('Foo<br />bar');
         unset($helper);
 
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->setAutoEscape(false)
+        $display          = $this->helper->setAutoEscape(false)
                                 ->render('default');
         $this->assertSame($displayAssertion, $display);
     }
@@ -481,12 +483,12 @@ class FlashMessengerTest extends TestCase
      */
     public function testCanSetAutoEscapeOnRender(): void
     {
-        $helper = new FlashMessenger;
+        $helper = new FlashMessenger();
         $helper->addMessage('Foo<br />bar');
         unset($helper);
 
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->render('default', [], false);
+        $display          = $this->helper->render('default', [], false);
         $this->assertSame($displayAssertion, $display);
     }
 
@@ -495,22 +497,22 @@ class FlashMessengerTest extends TestCase
      */
     public function testRenderUsesCurrentAutoEscapeByDefault(): void
     {
-        $helper = new FlashMessenger;
+        $helper = new FlashMessenger();
         $helper->addMessage('Foo<br />bar');
         unset($helper);
 
         $this->helper->setAutoEscape(false);
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->render('default');
+        $display          = $this->helper->render('default');
         $this->assertSame($displayAssertion, $display);
 
-        $helper = new FlashMessenger;
+        $helper = new FlashMessenger();
         $helper->addMessage('Foo<br />bar');
         unset($helper);
 
         $this->helper->setAutoEscape(true);
         $displayAssertion = '<ul class="default"><li>Foo&lt;br /&gt;bar</li></ul>';
-        $display = $this->helper->render('default');
+        $display          = $this->helper->render('default');
         $this->assertSame($displayAssertion, $display);
     }
 
@@ -522,7 +524,7 @@ class FlashMessengerTest extends TestCase
         $this->helper->addMessage('Foo<br />bar');
 
         $displayAssertion = '<ul class="default"><li>Foo&lt;br /&gt;bar</li></ul>';
-        $display = $this->helper->renderCurrent('default');
+        $display          = $this->helper->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
     }
 
@@ -534,7 +536,7 @@ class FlashMessengerTest extends TestCase
         $this->helper->addMessage('Foo<br />bar');
 
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->setAutoEscape(false)
+        $display          = $this->helper->setAutoEscape(false)
                                 ->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
     }
@@ -547,7 +549,7 @@ class FlashMessengerTest extends TestCase
         $this->helper->addMessage('Foo<br />bar');
 
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->renderCurrent('default', [], false);
+        $display          = $this->helper->renderCurrent('default', [], false);
         $this->assertSame($displayAssertion, $display);
     }
 
@@ -560,12 +562,12 @@ class FlashMessengerTest extends TestCase
 
         $this->helper->setAutoEscape(false);
         $displayAssertion = '<ul class="default"><li>Foo<br />bar</li></ul>';
-        $display = $this->helper->renderCurrent('default');
+        $display          = $this->helper->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
 
         $this->helper->setAutoEscape(true);
         $displayAssertion = '<ul class="default"><li>Foo&lt;br /&gt;bar</li></ul>';
-        $display = $this->helper->renderCurrent('default');
+        $display          = $this->helper->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
     }
 }

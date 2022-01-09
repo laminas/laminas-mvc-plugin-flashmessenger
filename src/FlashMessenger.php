@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Mvc\Plugin\FlashMessenger;
 
 use ArrayIterator;
@@ -10,6 +12,8 @@ use Laminas\Session\Container;
 use Laminas\Session\ManagerInterface as Manager;
 use Laminas\Stdlib\SplQueue;
 use ReturnTypeWillChange;
+
+use function count;
 
 /**
  * Flash Messenger - implement session-based messages
@@ -43,20 +47,17 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
      */
     public const NAMESPACE_INFO = 'info';
 
-    /**
-     * @var Container|null
-     */
+    /** @var Container|null */
     protected $container;
 
     /**
      * Messages from previous request
+     *
      * @var array<string, SplQueue>
      */
     protected $messages = [];
 
-    /**
-     * @var Manager
-     */
+    /** @var Manager */
     protected $session;
 
     /**
@@ -76,7 +77,6 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
     /**
      * Set the session manager
      *
-     * @param  Manager        $manager
      * @return FlashMessenger
      */
     public function setSessionManager(Manager $manager)
@@ -112,7 +112,7 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
             return $this->container;
         }
 
-        $manager = $this->getSessionManager();
+        $manager         = $this->getSessionManager();
         $this->container = new Container('FlashMessenger', $manager);
 
         return $this->container;
@@ -163,7 +163,8 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
             $container->setExpirationHops($hops, null);
         }
 
-        if (! isset($container->{$namespace})
+        if (
+            ! isset($container->{$namespace})
             || ! $container->{$namespace} instanceof SplQueue
         ) {
             $container->{$namespace} = new SplQueue();
@@ -644,7 +645,7 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
         $namespaces = [];
         foreach ($container as $namespace => $messages) {
             $this->messages[$namespace] = $messages;
-            $namespaces[] = $namespace;
+            $namespaces[]               = $namespace;
         }
 
         foreach ($namespaces as $namespace) {

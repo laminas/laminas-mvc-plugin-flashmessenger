@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
@@ -8,12 +10,21 @@ use Laminas\View\Helper\AbstractHelper;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\Helper\TranslatorAwareTrait;
 
+use function array_walk_recursive;
 use function assert;
+use function call_user_func_array;
+use function get_class;
+use function gettype;
+use function implode;
 use function is_bool;
+use function is_object;
+use function method_exists;
+use function sprintf;
 
 /**
  * Helper to proxy the plugin flash messenger
  * Duck-types against Laminas\I18n\Translator\TranslatorAwareInterface.
+ *
  * @method addMessage(string $string)
  * @method addInfoMessage(string $string)
  * @method addSuccessMessage(string $string)
@@ -52,9 +63,9 @@ class FlashMessenger extends AbstractHelper
      *
      * @var string
      */
-    protected $messageCloseString     = '</li></ul>';
+    protected $messageCloseString = '</li></ul>';
     /** @var string */
-    protected $messageOpenFormat      = '<ul%s><li>';
+    protected $messageOpenFormat = '<ul%s><li>';
     /** @var string */
     protected $messageSeparatorString = '</li><li>';
 
@@ -119,7 +130,7 @@ class FlashMessenger extends AbstractHelper
     public function render($namespace = 'default', array $classes = [], $autoEscape = null)
     {
         $flashMessenger = $this->getPluginFlashMessenger();
-        $messages = $flashMessenger->getMessagesFromNamespace($namespace);
+        $messages       = $flashMessenger->getMessagesFromNamespace($namespace);
         return $this->renderMessages($namespace, $messages, $classes, $autoEscape);
     }
 
@@ -134,7 +145,7 @@ class FlashMessenger extends AbstractHelper
     public function renderCurrent($namespace = 'default', array $classes = [], $autoEscape = null)
     {
         $flashMessenger = $this->getPluginFlashMessenger();
-        $messages = $flashMessenger->getCurrentMessagesFromNamespace($namespace);
+        $messages       = $flashMessenger->getCurrentMessagesFromNamespace($namespace);
         return $this->renderMessages($namespace, $messages, $classes, $autoEscape);
     }
 
@@ -176,7 +187,7 @@ class FlashMessenger extends AbstractHelper
         $translatorTextDomain = $this->getTranslatorTextDomain();
         array_walk_recursive(
             $messages,
-            function ($item) use (& $messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
+            function ($item) use (&$messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
                 if ($translator !== null) {
                     $item = $translator->translate(
                         $item,
@@ -222,7 +233,7 @@ class FlashMessenger extends AbstractHelper
     /**
      * Return whether auto escaping is enabled or disabled
      *
-     * return bool
+     * @return bool
      */
     public function getAutoEscape()
     {
@@ -300,17 +311,18 @@ class FlashMessenger extends AbstractHelper
      *
      * @param  PluginFlashMessenger $pluginFlashMessenger
      * @return FlashMessenger
-     * @throws InvalidArgumentException for an invalid $pluginFlashMessenger
+     * @throws InvalidArgumentException For an invalid $pluginFlashMessenger.
      */
     public function setPluginFlashMessenger($pluginFlashMessenger)
     {
-        if (! $pluginFlashMessenger instanceof PluginFlashMessenger
+        if (
+            ! $pluginFlashMessenger instanceof PluginFlashMessenger
         ) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects a %s instance; received %s',
                 __METHOD__,
                 PluginFlashMessenger::class,
-                (is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger))
+                is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger)
             ));
         }
 
@@ -347,7 +359,7 @@ class FlashMessenger extends AbstractHelper
         $view = $this->getView();
 
         if ($view && method_exists($view, 'plugin')) {
-            /** @var EscapeHtml|null escapeHtmlHelper */
+            /** @var EscapeHtml|null $this->escapeHtmlHelper */
             $this->escapeHtmlHelper = $view->plugin('escapehtml');
         }
 
