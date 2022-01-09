@@ -8,10 +8,27 @@ use Laminas\View\Helper\AbstractHelper;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\Helper\TranslatorAwareTrait;
 
+use function assert;
+use function is_bool;
+
 /**
  * Helper to proxy the plugin flash messenger
- *
  * Duck-types against Laminas\I18n\Translator\TranslatorAwareInterface.
+ * @method addMessage(string $string)
+ * @method addInfoMessage(string $string)
+ * @method addSuccessMessage(string $string)
+ * @method addErrorMessage(string $string)
+ * @method addWarningMessage(string $string)
+ * @method bool hasMessages(?string $namespace = null)
+ * @method bool hasInfoMessages()
+ * @method bool hasSuccessMessages()
+ * @method bool hasErrorMessages()
+ * @method bool hasWarningMessages()
+ * @method bool hasCurrentMessages(?string $namespace = null)
+ * @method bool hasCurrentInfoMessages()
+ * @method bool hasCurrentSuccessMessages()
+ * @method bool hasCurrentErrorMessages()
+ * @method bool hasCurrentWarningMessages()
  */
 class FlashMessenger extends AbstractHelper
 {
@@ -20,7 +37,7 @@ class FlashMessenger extends AbstractHelper
     /**
      * Default attributes for the open format tag
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $classMessages = [
         'info'    => PluginFlashMessenger::NAMESPACE_INFO,
@@ -36,7 +53,9 @@ class FlashMessenger extends AbstractHelper
      * @var string
      */
     protected $messageCloseString     = '</li></ul>';
+    /** @var string */
     protected $messageOpenFormat      = '<ul%s><li>';
+    /** @var string */
     protected $messageSeparatorString = '</li><li>';
 
     /**
@@ -49,14 +68,14 @@ class FlashMessenger extends AbstractHelper
     /**
      * Html escape helper
      *
-     * @var EscapeHtml
+     * @var EscapeHtml|null
      */
     protected $escapeHtmlHelper;
 
     /**
      * Flash messenger plugin
      *
-     * @var PluginFlashMessenger
+     * @var PluginFlashMessenger|null
      */
     protected $pluginFlashMessenger;
 
@@ -64,7 +83,7 @@ class FlashMessenger extends AbstractHelper
      * Returns the flash messenger plugin controller
      *
      * @param  string|null $namespace
-     * @return FlashMessenger|PluginFlashMessenger
+     * @return FlashMessenger|PluginFlashMessenger|array<array-key, string>
      */
     public function __invoke($namespace = null)
     {
@@ -93,7 +112,7 @@ class FlashMessenger extends AbstractHelper
      * Render Messages
      *
      * @param  string    $namespace
-     * @param  array     $classes
+     * @param  array<array-key, string> $classes
      * @param  null|bool $autoEscape
      * @return string
      */
@@ -123,8 +142,8 @@ class FlashMessenger extends AbstractHelper
      * Render Messages
      *
      * @param string    $namespace
-     * @param array     $messages
-     * @param array     $classes
+     * @param array<array-key, string> $messages
+     * @param array<array-key, string> $classes
      * @param bool|null $autoEscape
      * @return string
      */
@@ -148,9 +167,7 @@ class FlashMessenger extends AbstractHelper
             $classes = [$classes];
         }
 
-        if (null === $autoEscape) {
-            $autoEscape = $this->getAutoEscape();
-        }
+        $autoEscape = is_bool($autoEscape) ? $autoEscape : $this->autoEscape;
 
         // Flatten message array
         $escapeHtml           = $this->getEscapeHtmlHelper();
@@ -311,6 +328,7 @@ class FlashMessenger extends AbstractHelper
         if (null === $this->pluginFlashMessenger) {
             $this->setPluginFlashMessenger(new PluginFlashMessenger());
         }
+        assert($this->pluginFlashMessenger instanceof PluginFlashMessenger);
 
         return $this->pluginFlashMessenger;
     }
@@ -326,8 +344,11 @@ class FlashMessenger extends AbstractHelper
             return $this->escapeHtmlHelper;
         }
 
-        if (null !== $this->getView() && method_exists($this->getView(), 'plugin')) {
-            $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
+        $view = $this->getView();
+
+        if ($view && method_exists($view, 'plugin')) {
+            /** @var EscapeHtml|null escapeHtmlHelper */
+            $this->escapeHtmlHelper = $view->plugin('escapehtml');
         }
 
         if (! $this->escapeHtmlHelper instanceof EscapeHtml) {

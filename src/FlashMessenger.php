@@ -13,42 +13,44 @@ use ReturnTypeWillChange;
 
 /**
  * Flash Messenger - implement session-based messages
+ *
+ * @template-implements IteratorAggregate<array-key, string>
  */
 class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Countable
 {
     /**
      * Default messages namespace
      */
-    const NAMESPACE_DEFAULT = 'default';
+    public const NAMESPACE_DEFAULT = 'default';
 
     /**
      * Success messages namespace
      */
-    const NAMESPACE_SUCCESS = 'success';
+    public const NAMESPACE_SUCCESS = 'success';
 
     /**
      * Warning messages namespace
      */
-    const NAMESPACE_WARNING = 'warning';
+    public const NAMESPACE_WARNING = 'warning';
 
     /**
      * Error messages namespace
      */
-    const NAMESPACE_ERROR = 'error';
+    public const NAMESPACE_ERROR = 'error';
 
     /**
      * Info messages namespace
      */
-    const NAMESPACE_INFO = 'info';
+    public const NAMESPACE_INFO = 'info';
 
     /**
-     * @var Container
+     * @var Container|null
      */
     protected $container;
 
     /**
      * Messages from previous request
-     * @var array
+     * @var array<string, SplQueue>
      */
     protected $messages = [];
 
@@ -283,7 +285,7 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
      * Get messages from a specific namespace
      *
      * @param  string         $namespace
-     * @return array
+     * @return array<array-key, string>
      */
     public function getMessages($namespace = null)
     {
@@ -616,7 +618,7 @@ class FlashMessenger extends AbstractPlugin implements IteratorAggregate, Counta
      * Get messages from a specific namespace
      *
      * @param  string $namespaceToGet
-     * @return array
+     * @return array<array-key, string>
      */
     public function getMessagesFromNamespace($namespaceToGet)
     {

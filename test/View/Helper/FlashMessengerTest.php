@@ -13,10 +13,17 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
 
+use Psr\Container\ContainerInterface;
+
+use function assert;
+
 class FlashMessengerTest extends TestCase
 {
+    /** @var class-string */
     private $mvcPluginClass;
+    /** @var PluginFlashMessenger */
     private $plugin;
+    /** @var FlashMessenger */
     private $helper;
 
     public function setUp(): void
@@ -27,7 +34,7 @@ class FlashMessengerTest extends TestCase
         $this->plugin = $this->helper->getPluginFlashMessenger();
     }
 
-    public function seedMessages()
+    public function seedMessages(): void
     {
         $helper = new FlashMessenger();
         $helper->addMessage('foo');
@@ -39,7 +46,7 @@ class FlashMessengerTest extends TestCase
         unset($helper);
     }
 
-    public function seedCurrentMessages()
+    public function seedCurrentMessages(): void
     {
         $helper = new FlashMessenger();
         $helper->addMessage('foo');
@@ -49,14 +56,14 @@ class FlashMessengerTest extends TestCase
         $helper->addErrorMessage('bar-error');
     }
 
-    public function createServiceManager(array $config = [])
+    private function createServiceManager(array $config = []): ServiceManager
     {
         $config = new Config([
             'services' => [
                 'config' => $config,
             ],
             'factories' => [
-                'ControllerPluginManager' => function ($services, $name, $options) {
+                'ControllerPluginManager' => function (ContainerInterface $services) {
                     return new PluginManager($services, [
                         'aliases' => [
                             'flashmessenger' => $this->mvcPluginClass,
@@ -66,10 +73,13 @@ class FlashMessengerTest extends TestCase
                         ],
                     ]);
                 },
-                'ViewHelperManager' => function ($services, $name, $options) {
+                'ViewHelperManager' => function (ContainerInterface $services) {
                     return new HelperPluginManager($services, [
                         'factories' => [
-                            'flashmessenger' => FlashMessengerFactory::class,
+                            FlashMessenger::class => FlashMessengerFactory::class,
+                        ],
+                        'aliases' => [
+                            'flashmessenger' => FlashMessenger::class,
                         ],
                     ]);
                 },
@@ -80,30 +90,41 @@ class FlashMessengerTest extends TestCase
         return $sm;
     }
 
-    public function testCanAssertPluginClass()
+    private function retrieveViewHelperFrom(ServiceManager $container): FlashMessenger
+    {
+        $plugins = $container->get('ViewHelperManager');
+        self::assertInstanceOf(HelperPluginManager::class, $plugins);
+        $helper = $plugins->get('flashmessenger');
+        self::assertInstanceOf(FlashMessenger::class, $helper);
+
+        return $helper;
+    }
+
+    public function testCanAssertPluginClass(): void
     {
         $this->assertEquals($this->mvcPluginClass, get_class($this->plugin));
         $this->assertEquals($this->mvcPluginClass, get_class($this->helper->getPluginFlashMessenger()));
         $this->assertSame($this->plugin, $this->helper->getPluginFlashMessenger());
     }
 
-    public function testCanRetrieveMessages()
+    public function testCanRetrieveMessages(): void
     {
-        $helper = $this->helper;
+        $invoked = ($this->helper)();
+        assert($invoked instanceof FlashMessenger);
 
-        $this->assertFalse($helper()->hasMessages());
-        $this->assertFalse($helper()->hasInfoMessages());
-        $this->assertFalse($helper()->hasSuccessMessages());
-        $this->assertFalse($helper()->hasWarningMessages());
-        $this->assertFalse($helper()->hasErrorMessages());
+        $this->assertFalse($invoked->hasMessages());
+        $this->assertFalse($invoked->hasInfoMessages());
+        $this->assertFalse($invoked->hasSuccessMessages());
+        $this->assertFalse($invoked->hasWarningMessages());
+        $this->assertFalse($invoked->hasErrorMessages());
 
         $this->seedMessages();
 
-        $this->assertNotEmpty($helper('default'));
-        $this->assertNotEmpty($helper('info'));
-        $this->assertNotEmpty($helper('success'));
-        $this->assertNotEmpty($helper('warning'));
-        $this->assertNotEmpty($helper('error'));
+        $this->assertNotEmpty(($this->helper)('default'));
+        $this->assertNotEmpty(($this->helper)('info'));
+        $this->assertNotEmpty(($this->helper)('success'));
+        $this->assertNotEmpty(($this->helper)('warning'));
+        $this->assertNotEmpty(($this->helper)('error'));
 
         $this->assertTrue($this->plugin->hasMessages());
         $this->assertTrue($this->plugin->hasInfoMessages());
@@ -112,21 +133,22 @@ class FlashMessengerTest extends TestCase
         $this->assertTrue($this->plugin->hasErrorMessages());
     }
 
-    public function testCanRetrieveCurrentMessages()
+    public function testCanRetrieveCurrentMessages(): void
     {
-        $helper = $this->helper;
+        $invoked = ($this->helper)();
+        assert($invoked instanceof FlashMessenger);
 
-        $this->assertFalse($helper()->hasCurrentMessages());
-        $this->assertFalse($helper()->hasCurrentInfoMessages());
-        $this->assertFalse($helper()->hasCurrentSuccessMessages());
-        $this->assertFalse($helper()->hasCurrentErrorMessages());
+        $this->assertFalse($invoked->hasCurrentMessages());
+        $this->assertFalse($invoked->hasCurrentInfoMessages());
+        $this->assertFalse($invoked->hasCurrentSuccessMessages());
+        $this->assertFalse($invoked->hasCurrentErrorMessages());
 
         $this->seedCurrentMessages();
 
-        $this->assertNotEmpty($helper('default'));
-        $this->assertNotEmpty($helper('info'));
-        $this->assertNotEmpty($helper('success'));
-        $this->assertNotEmpty($helper('error'));
+        $this->assertNotEmpty(($this->helper)('default'));
+        $this->assertNotEmpty(($this->helper)('info'));
+        $this->assertNotEmpty(($this->helper)('success'));
+        $this->assertNotEmpty(($this->helper)('error'));
 
         $this->assertFalse($this->plugin->hasCurrentMessages());
         $this->assertFalse($this->plugin->hasCurrentInfoMessages());
@@ -134,7 +156,7 @@ class FlashMessengerTest extends TestCase
         $this->assertFalse($this->plugin->hasCurrentErrorMessages());
     }
 
-    public function testCanProxyAndRetrieveMessagesFromPluginController()
+    public function testCanProxyAndRetrieveMessagesFromPluginController(): void
     {
         $this->assertFalse($this->helper->hasMessages());
         $this->assertFalse($this->helper->hasInfoMessages());
@@ -151,7 +173,7 @@ class FlashMessengerTest extends TestCase
         $this->assertTrue($this->helper->hasErrorMessages());
     }
 
-    public function testCanProxyAndRetrieveCurrentMessagesFromPluginController()
+    public function testCanProxyAndRetrieveCurrentMessagesFromPluginController(): void
     {
         $this->assertFalse($this->helper->hasCurrentMessages());
         $this->assertFalse($this->helper->hasCurrentInfoMessages());
@@ -166,7 +188,7 @@ class FlashMessengerTest extends TestCase
         $this->assertTrue($this->helper->hasCurrentErrorMessages());
     }
 
-    public function testCanDisplayListOfMessages()
+    public function testCanDisplayListOfMessages(): void
     {
         $displayInfoAssertion = '';
         $displayInfo = $this->helper->render('info');
@@ -179,7 +201,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessages()
+    public function testCanDisplayListOfCurrentMessages(): void
     {
         $displayInfoAssertion = '';
         $displayInfo = $this->helper->renderCurrent('info');
@@ -192,47 +214,48 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfMessagesByDefaultParameters()
+    public function testCanDisplayListOfMessagesByDefaultParameters(): void
     {
-        $helper = $this->helper;
         $this->seedMessages();
 
         $displayInfoAssertion = '<ul class="default"><li>foo</li><li>bar</li></ul>';
-        $displayInfo = $helper()->render();
+        $displayInfo = $this->helper->render();
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfMessagesByDefaultCurrentParameters()
+    public function testCanDisplayListOfMessagesByDefaultCurrentParameters(): void
+    {
+        $this->seedCurrentMessages();
+
+        $displayInfoAssertion = '<ul class="default"><li>foo</li><li>bar</li></ul>';
+        $displayInfo = $this->helper->renderCurrent();
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+    }
+
+    public function testCanDisplayListOfMessagesByInvoke(): void
+    {
+        $invoked = ($this->helper)();
+        self::assertSame($this->helper, $invoked);
+        $this->seedMessages();
+
+        $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
+        $displayInfo = $invoked->render('info');
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+    }
+
+    public function testCanDisplayListOfCurrentMessagesByInvoke(): void
     {
         $helper = $this->helper;
         $this->seedCurrentMessages();
 
-        $displayInfoAssertion = '<ul class="default"><li>foo</li><li>bar</li></ul>';
-        $displayInfo = $helper()->renderCurrent();
-        $this->assertEquals($displayInfoAssertion, $displayInfo);
-    }
-
-    public function testCanDisplayListOfMessagesByInvoke()
-    {
-        $helper = $this->helper;
-        $this->seedMessages();
-
         $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $displayInfo = $helper()->render('info');
+        $invoked = $helper();
+        assert($invoked instanceof FlashMessenger);
+        $displayInfo = $invoked->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessagesByInvoke()
-    {
-        $helper = $this->helper;
-        $this->seedCurrentMessages();
-
-        $displayInfoAssertion = '<ul class="info"><li>bar-info</li></ul>';
-        $displayInfo = $helper()->renderCurrent('info');
-        $this->assertEquals($displayInfoAssertion, $displayInfo);
-    }
-
-    public function testCanDisplayListOfMessagesCustomised()
+    public function testCanDisplayListOfMessagesCustomised(): void
     {
         $this->seedMessages();
 
@@ -245,7 +268,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessagesCustomised()
+    public function testCanDisplayListOfCurrentMessagesCustomised(): void
     {
         $this->seedCurrentMessages();
 
@@ -258,7 +281,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfMessagesCustomisedSeparator()
+    public function testCanDisplayListOfMessagesCustomisedSeparator(): void
     {
         $this->seedMessages();
 
@@ -271,7 +294,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessagesCustomisedSeparator()
+    public function testCanDisplayListOfCurrentMessagesCustomisedSeparator(): void
     {
         $this->seedCurrentMessages();
 
@@ -284,7 +307,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfMessagesCustomisedByConfig()
+    public function testCanDisplayListOfMessagesCustomisedByConfig(): void
     {
         $this->seedMessages();
 
@@ -298,16 +321,15 @@ class FlashMessengerTest extends TestCase
             ],
         ];
 
-        $services            = $this->createServiceManager($config);
-        $helperPluginManager = $services->get('ViewHelperManager');
-        $helper              = $helperPluginManager->get('flashmessenger');
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
         $displayInfo = $helper->render('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessagesCustomisedByConfig()
+    public function testCanDisplayListOfCurrentMessagesCustomisedByConfig(): void
     {
         $this->seedCurrentMessages();
         $config = [
@@ -319,16 +341,15 @@ class FlashMessengerTest extends TestCase
                 ],
             ],
         ];
-        $services            = $this->createServiceManager($config);
-        $helperPluginManager = $services->get('ViewHelperManager');
-        $helper              = $helperPluginManager->get('flashmessenger');
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div class="info"><ul><li>bar-info</li></ul></div>';
         $displayInfo = $helper->renderCurrent('info');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfMessagesCustomisedByConfigSeparator()
+    public function testCanDisplayListOfMessagesCustomisedByConfigSeparator(): void
     {
         $this->seedMessages();
 
@@ -341,9 +362,8 @@ class FlashMessengerTest extends TestCase
                 ],
             ],
         ];
-        $services            = $this->createServiceManager($config);
-        $helperPluginManager = $services->get('ViewHelperManager');
-        $helper              = $helperPluginManager->get('flashmessenger');
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-baz foo-bar">foo</li>'
@@ -353,7 +373,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanDisplayListOfCurrentMessagesCustomisedByConfigSeparator()
+    public function testCanDisplayListOfCurrentMessagesCustomisedByConfigSeparator(): void
     {
         $this->seedCurrentMessages();
 
@@ -366,9 +386,8 @@ class FlashMessengerTest extends TestCase
                 ],
             ],
         ];
-        $services            = $this->createServiceManager($config);
-        $helperPluginManager = $services->get('ViewHelperManager');
-        $helper              = $helperPluginManager->get('flashmessenger');
+        $services = $this->createServiceManager($config);
+        $helper = $this->retrieveViewHelperFrom($services);
 
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-baz foo-bar">foo</li>'
@@ -378,7 +397,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayInfoAssertion, $displayInfo);
     }
 
-    public function testCanTranslateMessages()
+    public function testCanTranslateMessages(): void
     {
         $mockTranslator = $this->getMockBuilder(Translator::class)->getMock();
         $mockTranslator
@@ -396,7 +415,7 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayAssertion, $display);
     }
 
-    public function testCanTranslateCurrentMessages()
+    public function testCanTranslateCurrentMessages(): void
     {
         $mockTranslator = $this->getMockBuilder(Translator::class)->getMock();
         $mockTranslator
@@ -414,12 +433,12 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals($displayAssertion, $display);
     }
 
-    public function testAutoEscapeDefaultsToTrue()
+    public function testAutoEscapeDefaultsToTrue(): void
     {
         $this->assertTrue($this->helper->getAutoEscape());
     }
 
-    public function testCanSetAutoEscape()
+    public function testCanSetAutoEscape(): void
     {
         $this->helper->setAutoEscape(false);
         $this->assertFalse($this->helper->getAutoEscape());
@@ -429,9 +448,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
-    public function testMessageIsEscapedByDefault()
+    public function testMessageIsEscapedByDefault(): void
     {
         $helper = new FlashMessenger;
         $helper->addMessage('Foo<br />bar');
@@ -443,9 +462,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
-    public function testMessageIsNotEscapedWhenAutoEscapeIsFalse()
+    public function testMessageIsNotEscapedWhenAutoEscapeIsFalse(): void
     {
         $helper = new FlashMessenger;
         $helper->addMessage('Foo<br />bar');
@@ -458,9 +477,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
-    public function testCanSetAutoEscapeOnRender()
+    public function testCanSetAutoEscapeOnRender(): void
     {
         $helper = new FlashMessenger;
         $helper->addMessage('Foo<br />bar');
@@ -472,9 +491,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::render
      */
-    public function testRenderUsesCurrentAutoEscapeByDefault()
+    public function testRenderUsesCurrentAutoEscapeByDefault(): void
     {
         $helper = new FlashMessenger;
         $helper->addMessage('Foo<br />bar');
@@ -496,9 +515,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
-    public function testCurrentMessageIsEscapedByDefault()
+    public function testCurrentMessageIsEscapedByDefault(): void
     {
         $this->helper->addMessage('Foo<br />bar');
 
@@ -508,9 +527,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
-    public function testCurrentMessageIsNotEscapedWhenAutoEscapeIsFalse()
+    public function testCurrentMessageIsNotEscapedWhenAutoEscapeIsFalse(): void
     {
         $this->helper->addMessage('Foo<br />bar');
 
@@ -521,9 +540,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
-    public function testCanSetAutoEscapeOnRenderCurrent()
+    public function testCanSetAutoEscapeOnRenderCurrent(): void
     {
         $this->helper->addMessage('Foo<br />bar');
 
@@ -533,9 +552,9 @@ class FlashMessengerTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
-    public function testRenderCurrentUsesCurrentAutoEscapeByDefault()
+    public function testRenderCurrentUsesCurrentAutoEscapeByDefault(): void
     {
         $this->helper->addMessage('Foo<br />bar');
 
