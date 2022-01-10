@@ -16,7 +16,6 @@ use function call_user_func_array;
 use function get_class;
 use function gettype;
 use function implode;
-use function is_bool;
 use function is_object;
 use function method_exists;
 use function sprintf;
@@ -178,7 +177,7 @@ class FlashMessenger extends AbstractHelper
             $classes = [$classes];
         }
 
-        $autoEscape = is_bool($autoEscape) ? $autoEscape : $this->autoEscape;
+        $autoEscape = $autoEscape ?? $this->autoEscape;
 
         // Flatten message array
         $escapeHtml           = $this->getEscapeHtmlHelper();
