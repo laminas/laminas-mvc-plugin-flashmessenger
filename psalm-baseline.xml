@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.18.1@dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb">
   <file src="src/FlashMessenger.php">
-    <MissingConstructor occurrences="1">
-      <code>$session</code>
-    </MissingConstructor>
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;messages[$namespace]</code>
     </MixedArrayOffset>
@@ -17,26 +14,12 @@
       <code>$namespaces[]</code>
       <code>$namespaces[]</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>array</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="2">
+    <MixedMethodCall occurrences="1">
       <code>push</code>
-      <code>toArray</code>
     </MixedMethodCall>
     <MixedPropertyTypeCoercion occurrences="1">
       <code>$this-&gt;messages</code>
     </MixedPropertyTypeCoercion>
-    <MixedReturnStatement occurrences="1">
-      <code>$container-&gt;{$namespace}-&gt;toArray()</code>
-    </MixedReturnStatement>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>$this-&gt;messages[$namespace]-&gt;toArray()</code>
-      <code>array&lt;array-key, string&gt;</code>
-    </MixedReturnTypeCoercion>
-    <PossiblyNullArgument occurrences="1">
-      <code>$hops</code>
-    </PossiblyNullArgument>
     <UnusedForeachValue occurrences="1">
       <code>$messages</code>
     </UnusedForeachValue>
@@ -52,9 +35,8 @@
       <code>$item</code>
       <code>$messagesToPrint</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgumentTypeCoercion occurrences="1">
       <code>$classes</code>
-      <code>$messages</code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAssignment occurrences="2">
       <code>$messagesToPrint[]</code>

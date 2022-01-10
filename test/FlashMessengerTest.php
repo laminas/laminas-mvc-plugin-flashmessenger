@@ -269,7 +269,6 @@ class FlashMessengerTest extends TestCase
         $this->seedMessages();
         $test = [];
         foreach ($this->helper as $message) {
-            self::assertIsString($message);
             $test[] = $message;
         }
         $this->assertEquals(['foo', 'bar'], $test);
