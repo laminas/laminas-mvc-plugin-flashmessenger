@@ -63,26 +63,22 @@ class FlashMessengerTest extends TestCase
                 'config' => $config,
             ],
             'factories' => [
-                'ControllerPluginManager' => function (ContainerInterface $services) {
-                    return new PluginManager($services, [
-                        'aliases'   => [
-                            'flashmessenger' => $this->mvcPluginClass,
-                        ],
-                        'factories' => [
-                            $this->mvcPluginClass => InvokableFactory::class,
-                        ],
-                    ]);
-                },
-                'ViewHelperManager'       => function (ContainerInterface $services) {
-                    return new HelperPluginManager($services, [
-                        'factories' => [
-                            FlashMessenger::class => FlashMessengerFactory::class,
-                        ],
-                        'aliases'   => [
-                            'flashmessenger' => FlashMessenger::class,
-                        ],
-                    ]);
-                },
+                'ControllerPluginManager' => fn(ContainerInterface $services) => new PluginManager($services, [
+                    'aliases'   => [
+                        'flashmessenger' => $this->mvcPluginClass,
+                    ],
+                    'factories' => [
+                        $this->mvcPluginClass => InvokableFactory::class,
+                    ],
+                ]),
+                'ViewHelperManager'       => fn(ContainerInterface $services) => new HelperPluginManager($services, [
+                    'factories' => [
+                        FlashMessenger::class => FlashMessengerFactory::class,
+                    ],
+                    'aliases'   => [
+                        'flashmessenger' => FlashMessenger::class,
+                    ],
+                ]),
             ],
         ]);
         $sm     = new ServiceManager();
