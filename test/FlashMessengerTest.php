@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Mvc\Plugin\FlashMessenger;
 
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -9,12 +11,14 @@ use PHPUnit\Framework\TestCase;
 
 class FlashMessengerTest extends TestCase
 {
+    private FlashMessenger $helper;
+
     protected function setUp(): void
     {
-        $this->helper  = new FlashMessenger();
+        $this->helper = new FlashMessenger();
     }
 
-    public function seedMessages()
+    public function seedMessages(): void
     {
         $helper = new FlashMessenger();
         $helper->addMessage('foo');
@@ -25,16 +29,16 @@ class FlashMessengerTest extends TestCase
         unset($helper);
     }
 
-    public function testComposesSessionManagerByDefault()
+    public function testComposesSessionManagerByDefault(): void
     {
         $helper  = new FlashMessenger();
         $session = $helper->getSessionManager();
         $this->assertInstanceOf(SessionManager::class, $session);
     }
 
-    public function testSessionManagerIsMutable()
+    public function testSessionManagerIsMutable(): void
     {
-        $session = $this->getMockBuilder(ManagerInterface::class)->getMock();
+        $session               = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $currentSessionManager = $this->helper->getSessionManager();
 
         $this->helper->setSessionManager($session);
@@ -42,30 +46,30 @@ class FlashMessengerTest extends TestCase
         $this->assertNotSame($currentSessionManager, $this->helper->getSessionManager());
     }
 
-    public function testUsesContainerNamedAfterClass()
+    public function testUsesContainerNamedAfterClass(): void
     {
         $container = $this->helper->getContainer();
         $this->assertEquals('FlashMessenger', $container->getName());
     }
 
-    public function testUsesNamespaceNamedDefaultWithNoConfiguration()
+    public function testUsesNamespaceNamedDefaultWithNoConfiguration(): void
     {
         $this->assertEquals('default', $this->helper->getNamespace());
     }
 
-    public function testNamespaceIsMutable()
+    public function testNamespaceIsMutable(): void
     {
         $this->helper->setNamespace('foo');
         $this->assertEquals('foo', $this->helper->getNamespace());
     }
 
-    public function testMessengerIsEmptyByDefault()
+    public function testMessengerIsEmptyByDefault(): void
     {
         $this->assertFalse($this->helper->hasMessages());
         $this->assertFalse($this->helper->hasMessages(FlashMessenger::NAMESPACE_INFO));
     }
 
-    public function testCanAddMessages()
+    public function testCanAddMessages(): void
     {
         $this->helper->addMessage('foo');
         $this->assertTrue($this->helper->hasCurrentMessages());
@@ -74,21 +78,21 @@ class FlashMessengerTest extends TestCase
         $this->assertTrue($this->helper->hasCurrentMessages(FlashMessenger::NAMESPACE_INFO));
     }
 
-    public function testAddMessagesDoesNotChangeNamespace()
+    public function testAddMessagesDoesNotChangeNamespace(): void
     {
         $this->helper->setNamespace('foo');
         $this->helper->addMessage('bar-info', FlashMessenger::NAMESPACE_INFO);
         $this->assertEquals('foo', $this->helper->getNamespace());
     }
 
-    public function testAddingMessagesDoesNotChangeCount()
+    public function testAddingMessagesDoesNotChangeCount(): void
     {
         $this->assertCount(0, $this->helper);
         $this->helper->addMessage('foo');
         $this->assertCount(0, $this->helper);
     }
 
-    public function testCanClearMessages()
+    public function testCanClearMessages(): void
     {
         $this->seedMessages();
         $this->assertTrue($this->helper->hasMessages());
@@ -126,7 +130,7 @@ class FlashMessengerTest extends TestCase
         $this->assertFalse($this->helper->hasMessages(FlashMessenger::NAMESPACE_ERROR));
     }
 
-    public function testCanRetrieveMessages()
+    public function testCanRetrieveMessages(): void
     {
         $this->seedMessages();
         $this->assertTrue($this->helper->hasMessages());
@@ -172,7 +176,7 @@ class FlashMessengerTest extends TestCase
         $this->assertContains('bar-error', $messages);
     }
 
-    public function testCanRetrieveCurrentMessages()
+    public function testCanRetrieveCurrentMessages(): void
     {
         $this->seedMessages();
         $messages = $this->helper->getCurrentMessages();
@@ -217,7 +221,7 @@ class FlashMessengerTest extends TestCase
         $this->assertContains('bar-error', $messages);
     }
 
-    public function testCanClearCurrentMessages()
+    public function testCanClearCurrentMessages(): void
     {
         $this->helper->addMessage('foo');
         $this->assertTrue($this->helper->hasCurrentMessages());
@@ -260,7 +264,7 @@ class FlashMessengerTest extends TestCase
         $this->assertFalse($this->helper->hasCurrentMessages(FlashMessenger::NAMESPACE_ERROR));
     }
 
-    public function testIterationOccursOverMessages()
+    public function testIterationOccursOverMessages(): void
     {
         $this->seedMessages();
         $test = [];
@@ -270,15 +274,15 @@ class FlashMessengerTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $test);
     }
 
-    public function testCountIsOfMessages()
+    public function testCountIsOfMessages(): void
     {
         $this->seedMessages();
         $this->assertCount(2, $this->helper);
     }
 
-    public function testAddMessageWithLoops()
+    public function testAddMessageWithLoops(): void
     {
-        $helper  = new FlashMessenger();
+        $helper = new FlashMessenger();
         $helper->addMessage('foo');
         $helper->addMessage('bar', null, 2);
         $helper->addMessage('baz', null, 5);

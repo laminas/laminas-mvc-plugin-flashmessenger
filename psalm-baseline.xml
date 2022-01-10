@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.18.1@dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb">
+  <file src="src/FlashMessenger.php">
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;messages[$namespace]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="8">
+      <code>$messages</code>
+      <code>$messages</code>
+      <code>$namespace</code>
+      <code>$namespace</code>
+      <code>$namespace</code>
+      <code>$namespace</code>
+      <code>$namespaces[]</code>
+      <code>$namespaces[]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>push</code>
+    </MixedMethodCall>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>$this-&gt;messages</code>
+    </MixedPropertyTypeCoercion>
+    <UnusedForeachValue occurrences="1">
+      <code>$messages</code>
+    </UnusedForeachValue>
+  </file>
+  <file src="src/View/Helper/FlashMessenger.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>gettype($pluginFlashMessenger)</code>
+    </DocblockTypeContradiction>
+    <MissingClosureParamType occurrences="1">
+      <code>$item</code>
+    </MissingClosureParamType>
+    <MixedArgument occurrences="2">
+      <code>$item</code>
+      <code>$messagesToPrint</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$classes</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAssignment occurrences="2">
+      <code>$messagesToPrint[]</code>
+      <code>$messagesToPrint[]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="2">
+      <code>$messagesToPrint[]</code>
+      <code>$messagesToPrint[]</code>
+    </MixedAssignment>
+    <RedundantCastGivenDocblockType occurrences="4">
+      <code>(bool) $autoEscape</code>
+      <code>(string) $messageCloseString</code>
+      <code>(string) $messageOpenFormat</code>
+      <code>(string) $messageSeparatorString</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_object($pluginFlashMessenger)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/View/Helper/FlashMessengerFactory.php">
+    <MixedArgument occurrences="4">
+      <code>$configHelper['message_close_string']</code>
+      <code>$configHelper['message_open_format']</code>
+      <code>$configHelper['message_separator_string']</code>
+      <code>$flashMessenger</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$configHelper['message_close_string']</code>
+      <code>$configHelper['message_open_format']</code>
+      <code>$configHelper['message_separator_string']</code>
+      <code>$config['view_helper_config']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="5">
+      <code>$config</code>
+      <code>$configHelper</code>
+      <code>$container</code>
+      <code>$controllerPluginManager</code>
+      <code>$flashMessenger</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+    </MixedMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>$requestedName</code>
+    </PossiblyNullArgument>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>getServiceLocator</code>
+    </UndefinedInterfaceMethod>
+  </file>
+</files>
