@@ -22,11 +22,9 @@ use function get_class;
 class FlashMessengerTest extends TestCase
 {
     /** @var class-string */
-    private $mvcPluginClass;
-    /** @var PluginFlashMessenger */
-    private $plugin;
-    /** @var FlashMessenger */
-    private $helper;
+    private string $mvcPluginClass;
+    private PluginFlashMessenger $plugin;
+    private FlashMessenger $helper;
 
     public function setUp(): void
     {
