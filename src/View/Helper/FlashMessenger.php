@@ -25,11 +25,11 @@ use function sprintf;
  * Helper to proxy the plugin flash messenger
  * Duck-types against Laminas\I18n\Translator\TranslatorAwareInterface.
  *
- * @method addMessage(string $string)
- * @method addInfoMessage(string $string)
- * @method addSuccessMessage(string $string)
- * @method addErrorMessage(string $string)
- * @method addWarningMessage(string $string)
+ * @method PluginFlashMessenger addMessage(string $string)
+ * @method PluginFlashMessenger addInfoMessage(string $string)
+ * @method PluginFlashMessenger addSuccessMessage(string $string)
+ * @method PluginFlashMessenger addErrorMessage(string $string)
+ * @method PluginFlashMessenger addWarningMessage(string $string)
  * @method bool hasMessages(?string $namespace = null)
  * @method bool hasInfoMessages()
  * @method bool hasSuccessMessages()
