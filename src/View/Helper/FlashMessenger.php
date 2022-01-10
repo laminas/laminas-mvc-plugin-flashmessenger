@@ -177,7 +177,7 @@ class FlashMessenger extends AbstractHelper
             $classes = [$classes];
         }
 
-        $autoEscape = $autoEscape ?? $this->autoEscape;
+        $autoEscape ??= $this->autoEscape;
 
         // Flatten message array
         $escapeHtml           = $this->getEscapeHtmlHelper();
