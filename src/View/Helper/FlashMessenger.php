@@ -240,7 +240,7 @@ class FlashMessenger extends AbstractHelper
                 '%s expects a %s instance; received %s',
                 __METHOD__,
                 PluginFlashMessenger::class,
-                is_object($pluginFlashMessenger) ? $pluginFlashMessenger::class : gettype($pluginFlashMessenger)
+                is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger)
             ));
         }
 
