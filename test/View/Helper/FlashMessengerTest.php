@@ -9,6 +9,7 @@ use Laminas\Mvc\Controller\PluginManager;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
 use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessengerFactory;
+use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessengerNamespace;
 use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
@@ -17,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 use function assert;
+use function count;
 use function get_class;
 
 class FlashMessengerTest extends TestCase
@@ -570,6 +572,44 @@ class FlashMessengerTest extends TestCase
         $this->helper->setAutoEscape(true);
         $displayAssertion = '<ul class=""><li>Foo&lt;br /&gt;bar</li></ul>';
         $display          = $this->helper->renderCurrent('default');
+        $this->assertSame($displayAssertion, $display);
+    }
+
+    /**
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::getNamespaces
+     */
+    public function testNumberOfNamespacesIsTheSame(): void
+    {
+        $displayAssertion = 0;
+        $display          = count($this->helper->getNamespaces());
+        $this->assertSame($displayAssertion, $display);
+
+        $namespace = new FlashMessengerNamespace('default');
+        $this->helper
+            ->addNamespace($namespace)
+            ->addNamespace($namespace);
+
+        $displayAssertion = 1;
+        $display          = count($this->helper->getNamespaces());
+        $this->assertSame($displayAssertion, $display);
+
+        $config = [
+            'view_helper_config' => [
+                'flashmessenger' => [
+                    'info' => [
+                        'message_open_format'      => '<div%s><ul><li>',
+                        'message_separator_string' => '</li><li>',
+                        'message_close_string'     => '</li></ul></div>',
+                    ],
+                ],
+            ],
+        ];
+
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
+
+        $displayAssertion = 1;
+        $display          = count($helper->getNamespaces());
         $this->assertSame($displayAssertion, $display);
     }
 }
