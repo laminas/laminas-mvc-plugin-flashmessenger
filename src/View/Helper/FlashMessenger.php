@@ -13,7 +13,6 @@ use Laminas\View\Helper\TranslatorAwareTrait;
 use function array_walk_recursive;
 use function assert;
 use function call_user_func_array;
-use function get_class;
 use function gettype;
 use function implode;
 use function is_object;
@@ -44,29 +43,10 @@ class FlashMessenger extends AbstractHelper
 {
     use TranslatorAwareTrait;
 
-    /**
-     * Default attributes for the open format tag
-     *
-     * @var array<string, string>
-     */
-    protected $classMessages = [
-        'info'    => PluginFlashMessenger::NAMESPACE_INFO,
-        'error'   => PluginFlashMessenger::NAMESPACE_ERROR,
-        'success' => PluginFlashMessenger::NAMESPACE_SUCCESS,
-        'default' => PluginFlashMessenger::NAMESPACE_DEFAULT,
-        'warning' => PluginFlashMessenger::NAMESPACE_WARNING,
-    ];
+    /** @var array<string, FlashMessengerNamespace> */
+    protected array $namespaces = [];
 
-    /**
-     * Templates for the open/close/separators for message tags
-     *
-     * @var string
-     */
-    protected $messageCloseString = '</li></ul>';
-    /** @var string */
-    protected $messageOpenFormat = '<ul%s><li>';
-    /** @var string */
-    protected $messageSeparatorString = '</li><li>';
+    protected FlashMessengerNamespace $defaultNamespace;
 
     /**
      * Flag whether to escape messages
@@ -88,6 +68,11 @@ class FlashMessenger extends AbstractHelper
      * @var PluginFlashMessenger|null
      */
     protected $pluginFlashMessenger;
+
+    public function __construct()
+    {
+        $this->setDefaultNamespace(new FlashMessengerNamespace(PluginFlashMessenger::NAMESPACE_DEFAULT));
+    }
 
     /**
      * Returns the flash messenger plugin controller
@@ -167,14 +152,14 @@ class FlashMessenger extends AbstractHelper
             return '';
         }
 
+        $objNamespace = $this->getDefaultNamespace();
+        if (isset($this->namespaces[$namespace])) {
+            $objNamespace = $this->namespaces[$namespace];
+        }
+
         // Prepare classes for opening tag
         if (empty($classes)) {
-            if (isset($this->classMessages[$namespace])) {
-                $classes = $this->classMessages[$namespace];
-            } else {
-                $classes = $this->classMessages['default'];
-            }
-            $classes = [$classes];
+            $classes = [$objNamespace->getClasses()];
         }
 
         $autoEscape ??= $this->autoEscape;
@@ -208,12 +193,12 @@ class FlashMessenger extends AbstractHelper
         }
 
         // Generate markup
-        $markup  = sprintf($this->getMessageOpenFormat(), ' class="' . implode(' ', $classes) . '"');
+        $markup  = sprintf($objNamespace->getMessageOpenFormat(), ' class="' . implode(' ', $classes) . '"');
         $markup .= implode(
-            sprintf($this->getMessageSeparatorString(), ' class="' . implode(' ', $classes) . '"'),
+            sprintf($objNamespace->getMessageSeparatorString(), ' class="' . implode(' ', $classes) . '"'),
             $messagesToPrint
         );
-        $markup .= $this->getMessageCloseString();
+        $markup .= $objNamespace->getMessageCloseString();
         return $markup;
     }
 
@@ -240,72 +225,6 @@ class FlashMessenger extends AbstractHelper
     }
 
     /**
-     * Set the string used to close message representation
-     *
-     * @param  string $messageCloseString
-     * @return FlashMessenger
-     */
-    public function setMessageCloseString($messageCloseString)
-    {
-        $this->messageCloseString = (string) $messageCloseString;
-        return $this;
-    }
-
-    /**
-     * Get the string used to close message representation
-     *
-     * @return string
-     */
-    public function getMessageCloseString()
-    {
-        return $this->messageCloseString;
-    }
-
-    /**
-     * Set the formatted string used to open message representation
-     *
-     * @param  string $messageOpenFormat
-     * @return FlashMessenger
-     */
-    public function setMessageOpenFormat($messageOpenFormat)
-    {
-        $this->messageOpenFormat = (string) $messageOpenFormat;
-        return $this;
-    }
-
-    /**
-     * Get the formatted string used to open message representation
-     *
-     * @return string
-     */
-    public function getMessageOpenFormat()
-    {
-        return $this->messageOpenFormat;
-    }
-
-    /**
-     * Set the string used to separate messages
-     *
-     * @param  string $messageSeparatorString
-     * @return FlashMessenger
-     */
-    public function setMessageSeparatorString($messageSeparatorString)
-    {
-        $this->messageSeparatorString = (string) $messageSeparatorString;
-        return $this;
-    }
-
-    /**
-     * Get the string used to separate messages
-     *
-     * @return string
-     */
-    public function getMessageSeparatorString()
-    {
-        return $this->messageSeparatorString;
-    }
-
-    /**
      * Set the flash messenger plugin
      *
      * @param  PluginFlashMessenger $pluginFlashMessenger
@@ -321,7 +240,7 @@ class FlashMessenger extends AbstractHelper
                 '%s expects a %s instance; received %s',
                 __METHOD__,
                 PluginFlashMessenger::class,
-                is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger)
+                is_object($pluginFlashMessenger) ? $pluginFlashMessenger::class : gettype($pluginFlashMessenger)
             ));
         }
 
@@ -368,5 +287,33 @@ class FlashMessenger extends AbstractHelper
         }
 
         return $this->escapeHtmlHelper;
+    }
+
+    /**
+     * @return array<string, FlashMessengerNamespace>
+     */
+    public function getNamespaces(): array
+    {
+        return $this->namespaces;
+    }
+
+    /**
+     * @return FlashMessenger
+     */
+    public function addNamespace(FlashMessengerNamespace $flashMessengerNamespace): self
+    {
+        $this->namespaces[$flashMessengerNamespace->getName()] = $flashMessengerNamespace;
+
+        return $this;
+    }
+
+    public function getDefaultNamespace(): FlashMessengerNamespace
+    {
+        return $this->defaultNamespace;
+    }
+
+    public function setDefaultNamespace(FlashMessengerNamespace $defaultNamespace): void
+    {
+        $this->defaultNamespace = $defaultNamespace;
     }
 }
