@@ -564,4 +564,53 @@ class FlashMessengerTest extends TestCase
         $display          = $this->helper->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
     }
+
+    /**
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     */
+    public function testNamespacesMessageFormatIsDifferent(): void
+    {
+        $this->seedMessages();
+
+        $config   = [
+            'view_helper_config' => [
+                'flashmessenger' => [
+                    'default' => [
+                        'message_open_format'      => '<div><ul><li%s>',
+                        'message_separator_string' => '</li><li%s>',
+                        'message_close_string'     => '</li></ul></div>',
+                        'classes'                  => 'foo-baz foo-bar'
+                    ],
+                    'info' => [
+                        'message_open_format'      => '<div><ul><li%s>',
+                        'message_separator_string' => '</li><li%s>',
+                        'message_close_string'     => '</li></ul></div>',
+                        'classes'                  => 'foo-bar foo-baz'
+                    ],
+                ],
+            ],
+        ];
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
+
+        $displayInfoAssertion = '<div><ul>'
+            . '<li class="foo-baz foo-bar">foo</li>'
+            . '<li class="foo-baz foo-bar">bar</li>'
+            . '</ul></div>';
+        $displayInfo          = $helper->renderCurrent('default');
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+
+
+        $displayInfoAssertion = '<div><ul>'
+            . '<li class="foo-bar foo-baz">bar-info</li>'
+            . '</ul></div>';
+        $displayInfo          = $helper->renderCurrent('info');
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+
+        $displayInfoAssertion = '<ul class="warning">'
+            . '<li>bar-warning</li>'
+            . '</ul>';
+        $displayInfo          = $helper->renderCurrent('warning');
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+    }
 }
