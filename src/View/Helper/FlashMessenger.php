@@ -13,7 +13,6 @@ use Laminas\View\Helper\TranslatorAwareTrait;
 use function array_walk_recursive;
 use function assert;
 use function call_user_func_array;
-use function get_class;
 use function gettype;
 use function implode;
 use function is_object;
@@ -89,15 +88,13 @@ class FlashMessenger extends AbstractHelper
      */
     protected $pluginFlashMessenger;
 
-    /**
-     * @var array<string, FlashMessengerNamespace>
-     */
-    protected $namespaces = array();
+    /** @var array<string, FlashMessengerNamespace> */
+    protected $namespaces = [];
 
     /**
      * @param array<string, FlashMessengerNamespace> $namespaces
      */
-    public function __construct(array $namespaces = array())
+    public function __construct(array $namespaces = [])
     {
         foreach ($namespaces as $namespace) {
             $this->namespaces[$namespace->getName()] = $namespace;
@@ -361,7 +358,7 @@ class FlashMessenger extends AbstractHelper
                 '%s expects a %s instance; received %s',
                 __METHOD__,
                 PluginFlashMessenger::class,
-                is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger)
+                is_object($pluginFlashMessenger) ? $pluginFlashMessenger::class : gettype($pluginFlashMessenger)
             ));
         }
 
@@ -410,25 +407,18 @@ class FlashMessenger extends AbstractHelper
         return $this->escapeHtmlHelper;
     }
 
-    /**
-     * @param string $namespace
-     * @return FlashMessengerNamespace|null
-     */
-    private function getNamespace(string $namespace) : ?FlashMessengerNamespace
+    private function getNamespace(string $namespace): ?FlashMessengerNamespace
     {
         return $this->namespaces[$namespace] ?? null;
     }
 
-    /**
-     * @return string
-     */
     private function getClasses(string $namespace): string
     {
         $objNamespace = $this->getNamespace($namespace);
         if ($objNamespace !== null) {
             return $objNamespace->getClasses();
         } else {
-            return $this->classMessages[$namespace]?? '';
+            return $this->classMessages[$namespace] ?? '';
         }
     }
 }

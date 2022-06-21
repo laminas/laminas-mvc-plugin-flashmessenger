@@ -579,13 +579,13 @@ class FlashMessengerTest extends TestCase
                         'message_open_format'      => '<div><ul><li%s>',
                         'message_separator_string' => '</li><li%s>',
                         'message_close_string'     => '</li></ul></div>',
-                        'classes'                  => 'foo-baz foo-bar'
+                        'classes'                  => 'foo-baz foo-bar',
                     ],
-                    'info' => [
+                    'info'    => [
                         'message_open_format'      => '<div><ul><li%s>',
                         'message_separator_string' => '</li><li%s>',
                         'message_close_string'     => '</li></ul></div>',
-                        'classes'                  => 'foo-bar foo-baz'
+                        'classes'                  => 'foo-bar foo-baz',
                     ],
                 ],
             ],
@@ -599,7 +599,6 @@ class FlashMessengerTest extends TestCase
             . '</ul></div>';
         $displayInfo          = $helper->renderCurrent('default');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
-
 
         $displayInfoAssertion = '<div><ul>'
             . '<li class="foo-bar foo-baz">bar-info</li>'

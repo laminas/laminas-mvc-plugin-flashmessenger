@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
 use Interop\Container\ContainerInterface;
-use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
+use function is_array;
 use function method_exists;
 
 class FlashMessengerFactory implements FactoryInterface
@@ -30,7 +30,7 @@ class FlashMessengerFactory implements FactoryInterface
         $controllerPluginManager = $container->get('ControllerPluginManager');
         $flashMessenger          = $controllerPluginManager->get('flashmessenger');
 
-        $config     = $container->get('config');
+        $config = $container->get('config');
         if (
             isset($config['view_helper_config']['flashmessenger']) &&
             is_array($config['view_helper_config']['flashmessenger'])
@@ -43,7 +43,6 @@ class FlashMessengerFactory implements FactoryInterface
                 }
             }
 
-
             if ($isArrayOneDimensial === true) {
                 return $this->createHelperWithOldConfig($flashMessenger, $config);
             } else {
@@ -54,6 +53,11 @@ class FlashMessengerFactory implements FactoryInterface
         return new FlashMessenger();
     }
 
+    /**
+     * @param \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger
+     * @param array $config
+     * @return FlashMessenger
+     */
     private function createHelperWithOldConfig($flashMessenger, $config)
     {
         $helper = new FlashMessenger();
@@ -76,12 +80,20 @@ class FlashMessengerFactory implements FactoryInterface
         return $helper;
     }
 
+    /**
+     * @param \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger
+     * @param array $config
+     * @return FlashMessenger
+     */
     private function createHelperWithActualConfig($flashMessenger, $config)
     {
         $namespaces   = [];
         $configHelper = $config['view_helper_config']['flashmessenger'];
         foreach ($configHelper as $configNamespace => $arrProperties) {
-            $namespace = new FlashMessengerNamespace($configNamespace, isset($arrProperties['classes']) ? (string) $arrProperties['classes'] : '');
+            $namespace = new FlashMessengerNamespace(
+                $configNamespace,
+                isset($arrProperties['classes']) ? (string) $arrProperties['classes'] : ''
+            );
             if (isset($arrProperties['message_open_format'])) {
                 $namespace
                     ->setMessageOpenFormat((string) $arrProperties['message_open_format']);

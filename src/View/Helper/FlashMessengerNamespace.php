@@ -25,7 +25,7 @@ class FlashMessengerNamespace
 
     public function __construct(string $name, string $classes = '')
     {
-        $this->name = $name;
+        $this->name    = $name;
         $this->classes = $classes;
     }
 
