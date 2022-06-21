@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -25,26 +26,79 @@ class FlashMessengerFactory implements FactoryInterface
         if (! method_exists($container, 'configure')) {
             $container = $container->getServiceLocator();
         }
-        $helper                  = new FlashMessenger();
+
         $controllerPluginManager = $container->get('ControllerPluginManager');
         $flashMessenger          = $controllerPluginManager->get('flashmessenger');
 
-        $helper->setPluginFlashMessenger($flashMessenger);
+        $config     = $container->get('config');
+        if (
+            isset($config['view_helper_config']['flashmessenger']) &&
+            is_array($config['view_helper_config']['flashmessenger'])
+        ) {
+            $isArrayOneDimensial = true;
+            foreach ($config['view_helper_config']['flashmessenger'] as $property) {
+                if (is_array($property)) {
+                    $isArrayOneDimensial = false;
+                    break;
+                }
+            }
 
-        $config = $container->get('config');
-        if (isset($config['view_helper_config']['flashmessenger'])) {
-            $configHelper = $config['view_helper_config']['flashmessenger'];
-            if (isset($configHelper['message_open_format'])) {
-                $helper->setMessageOpenFormat($configHelper['message_open_format']);
-            }
-            if (isset($configHelper['message_separator_string'])) {
-                $helper->setMessageSeparatorString($configHelper['message_separator_string']);
-            }
-            if (isset($configHelper['message_close_string'])) {
-                $helper->setMessageCloseString($configHelper['message_close_string']);
+
+            if ($isArrayOneDimensial === true) {
+                return $this->createHelperWithOldConfig($flashMessenger, $config);
+            } else {
+                return $this->createHelperWithActualConfig($flashMessenger, $config);
             }
         }
 
+        return new FlashMessenger();
+    }
+
+    private function createHelperWithOldConfig($flashMessenger, $config)
+    {
+        $helper = new FlashMessenger();
+        $helper->setPluginFlashMessenger($flashMessenger);
+
+        $configHelper = $config['view_helper_config']['flashmessenger'];
+        if (isset($configHelper['message_open_format'])) {
+            $helper
+                ->setMessageOpenFormat($configHelper['message_open_format']);
+        }
+        if (isset($configHelper['message_separator_string'])) {
+            $helper
+                ->setMessageSeparatorString($configHelper['message_separator_string']);
+        }
+        if (isset($configHelper['message_close_string'])) {
+            $helper
+                ->setMessageCloseString($configHelper['message_close_string']);
+        }
+
+        return $helper;
+    }
+
+    private function createHelperWithActualConfig($flashMessenger, $config)
+    {
+        $namespaces   = [];
+        $configHelper = $config['view_helper_config']['flashmessenger'];
+        foreach ($configHelper as $configNamespace => $arrProperties) {
+            $namespace = new FlashMessengerNamespace($configNamespace, isset($arrProperties['classes']) ? (string) $arrProperties['classes'] : '');
+            if (isset($arrProperties['message_open_format'])) {
+                $namespace
+                    ->setMessageOpenFormat((string) $arrProperties['message_open_format']);
+            }
+            if (isset($arrProperties['message_separator_string'])) {
+                $namespace
+                    ->setMessageSeparatorString((string) $arrProperties['message_separator_string']);
+            }
+            if (isset($arrProperties['message_close_string'])) {
+                $namespace
+                    ->setMessageCloseString((string) $arrProperties['message_close_string']);
+            }
+            $namespaces[$namespace->getName()] = $namespace;
+        }
+
+        $helper = new FlashMessenger($namespaces);
+        $helper->setPluginFlashMessenger($flashMessenger);
         return $helper;
     }
 
