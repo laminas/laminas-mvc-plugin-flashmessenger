@@ -13,6 +13,7 @@ use Laminas\View\Helper\TranslatorAwareTrait;
 use function array_walk_recursive;
 use function assert;
 use function call_user_func_array;
+use function get_class;
 use function gettype;
 use function implode;
 use function is_object;
@@ -256,9 +257,9 @@ class FlashMessenger extends AbstractHelper
     {
         $objNamespace = $this->getNamespace($namespace);
         if ($objNamespace !== null) {
-            $objNamespace->setMessageCloseString((string) $messageCloseString);
+            $objNamespace->setMessageCloseString($messageCloseString);
         } else {
-            $this->messageCloseString = (string) $messageCloseString;
+            $this->messageCloseString = $messageCloseString;
         }
         return $this;
     }
@@ -288,9 +289,9 @@ class FlashMessenger extends AbstractHelper
     {
         $objNamespace = $this->getNamespace($namespace);
         if ($objNamespace !== null) {
-            $objNamespace->setMessageOpenFormat((string) $messageOpenFormat);
+            $objNamespace->setMessageOpenFormat($messageOpenFormat);
         } else {
-            $this->messageOpenFormat = (string) $messageOpenFormat;
+            $this->messageOpenFormat = $messageOpenFormat;
         }
         return $this;
     }
@@ -320,9 +321,9 @@ class FlashMessenger extends AbstractHelper
     {
         $objNamespace = $this->getNamespace($namespace);
         if ($objNamespace !== null) {
-            $objNamespace->setMessageSeparatorString((string) $messageSeparatorString);
+            $objNamespace->setMessageSeparatorString($messageSeparatorString);
         } else {
-            $this->messageSeparatorString = (string) $messageSeparatorString;
+            $this->messageSeparatorString = $messageSeparatorString;
         }
         return $this;
     }
@@ -358,7 +359,7 @@ class FlashMessenger extends AbstractHelper
                 '%s expects a %s instance; received %s',
                 __METHOD__,
                 PluginFlashMessenger::class,
-                is_object($pluginFlashMessenger) ? $pluginFlashMessenger::class : gettype($pluginFlashMessenger)
+                is_object($pluginFlashMessenger) ? get_class($pluginFlashMessenger) : gettype($pluginFlashMessenger)
             ));
         }
 
