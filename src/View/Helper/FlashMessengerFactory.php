@@ -33,7 +33,7 @@ class FlashMessengerFactory implements FactoryInterface
 
         $config = $container->get('config');
         if (isset($config['view_helper_config']['flashmessenger'])) {
-            $configHelper        = (array) $config['view_helper_config']['flashmessenger'];
+            $configHelper = (array) $config['view_helper_config']['flashmessenger'];
 
             $isArrayOneDimensional = $this->isArrayOneDimensional($configHelper);
 

@@ -262,7 +262,7 @@ class FlashMessenger extends AbstractHelper
     public function setMessageCloseString($messageCloseString, ?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             $this->messageCloseString = $messageCloseString;
         } else {
@@ -280,7 +280,7 @@ class FlashMessenger extends AbstractHelper
     public function getMessageCloseString(?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             return $this->messageCloseString;
         }
@@ -297,7 +297,7 @@ class FlashMessenger extends AbstractHelper
     public function setMessageOpenFormat($messageOpenFormat, ?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             $this->messageOpenFormat = $messageOpenFormat;
         } else {
@@ -314,7 +314,7 @@ class FlashMessenger extends AbstractHelper
     public function getMessageOpenFormat(?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             return $this->messageOpenFormat;
         }
@@ -331,7 +331,7 @@ class FlashMessenger extends AbstractHelper
     public function setMessageSeparatorString($messageSeparatorString, ?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             $this->messageSeparatorString = $messageSeparatorString;
         } else {
@@ -348,7 +348,7 @@ class FlashMessenger extends AbstractHelper
     public function getMessageSeparatorString(?string $namespaceName = null)
     {
         $namespaceName = $namespaceName ?? $this->getDefaultNamespaceName();
-        $namespace = $this->getNamespace($namespaceName);
+        $namespace     = $this->getNamespace($namespaceName);
         if ($namespace === null) {
             return $this->messageSeparatorString;
         }
@@ -438,11 +438,9 @@ class FlashMessenger extends AbstractHelper
 
     /**
      * Returns default namespace name
-     *
-     * @return string
      */
-    private function getDefaultNamespaceName() : string
+    private function getDefaultNamespaceName(): string
     {
-        return \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_DEFAULT;
+        return PluginFlashMessenger::NAMESPACE_DEFAULT;
     }
 }
