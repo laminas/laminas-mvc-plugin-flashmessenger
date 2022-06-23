@@ -34,16 +34,10 @@ class FlashMessengerFactory implements FactoryInterface
         $config = $container->get('config');
         if (isset($config['view_helper_config']['flashmessenger'])) {
             $configHelper        = (array) $config['view_helper_config']['flashmessenger'];
-            $isArrayOneDimensial = true;
-            /** @var string|array<string,string|array> $property */
-            foreach ($configHelper as $property) {
-                if (is_array($property)) {
-                    $isArrayOneDimensial = false;
-                    break;
-                }
-            }
 
-            if ($isArrayOneDimensial === true) {
+            $isArrayOneDimensional = $this->isArrayOneDimensional($configHelper);
+
+            if ($isArrayOneDimensional === true) {
                 return $this->createHelperWithOldConfig($flashMessenger, $configHelper);
             } else {
                 return $this->createHelperWithActualConfig($flashMessenger, $configHelper);
@@ -55,7 +49,9 @@ class FlashMessengerFactory implements FactoryInterface
 
     /**
      * @param \Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger
-     * @param array $configHelper
+     * @param array $configHelper {
+     *      message_open_format?:string, message_close_string?:string, message_separator_string?:string
+     * }
      * @return FlashMessenger
      */
     private function createHelperWithOldConfig($flashMessenger, $configHelper)
@@ -87,7 +83,11 @@ class FlashMessengerFactory implements FactoryInterface
     private function createHelperWithActualConfig($flashMessenger, $configHelper)
     {
         $namespaces = [];
-        /** @var array<string, mixed> $arrProperties */
+        /**
+         * @var array<string, mixed> $arrProperties {
+         * classes?:string, message_open_format?:string, message_close_string?:string, message_separator_string?:string
+         * }
+         */
         foreach ($configHelper as $configNamespace => $arrProperties) {
             $namespace = new FlashMessengerNamespace(
                 (string) $configNamespace,
@@ -111,6 +111,24 @@ class FlashMessengerFactory implements FactoryInterface
         $helper = new FlashMessenger($namespaces);
         $helper->setPluginFlashMessenger($flashMessenger);
         return $helper;
+    }
+
+    /**
+     * @param array $array
+     */
+    private function isArrayOneDimensional(array $array): bool
+    {
+        $isArrayOneDimensional = true;
+
+        /** @var string|array $property */
+        foreach ($array as $property) {
+            if (is_array($property)) {
+                $isArrayOneDimensional = false;
+                break;
+            }
+        }
+
+        return $isArrayOneDimensional;
     }
 
     /**
