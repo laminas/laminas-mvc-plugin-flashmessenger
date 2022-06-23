@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Mvc\Plugin\FlashMessenger\View\Helper;
 
+/**
+ * Flashmessenger namespace
+ *
+ * @internal
+ */
 class FlashMessengerNamespace
 {
     /**
@@ -12,7 +17,7 @@ class FlashMessengerNamespace
     private string $name;
 
     /**
-     * Default attributes for the open format tag
+     * String of css classes to be attached
      */
     private string $classes = '';
 
