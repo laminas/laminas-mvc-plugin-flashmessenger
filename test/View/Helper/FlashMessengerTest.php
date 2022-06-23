@@ -568,7 +568,7 @@ class FlashMessengerTest extends TestCase
     /**
      * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
      */
-    public function testNamespacesMessageFormatIsDifferent(): void
+    public function testNamespaceMessageFormatByConfig(): void
     {
         $this->seedMessages();
 
@@ -581,12 +581,6 @@ class FlashMessengerTest extends TestCase
                         'message_close_string'     => '</li></ul></div>',
                         'classes'                  => 'foo-baz foo-bar',
                     ],
-                    'info'    => [
-                        'message_open_format'      => '<div><ul><li%s>',
-                        'message_separator_string' => '</li><li%s>',
-                        'message_close_string'     => '</li></ul></div>',
-                        'classes'                  => 'foo-bar foo-baz',
-                    ],
                 ],
             ],
         ];
@@ -597,13 +591,7 @@ class FlashMessengerTest extends TestCase
             . '<li class="foo-baz foo-bar">foo</li>'
             . '<li class="foo-baz foo-bar">bar</li>'
             . '</ul></div>';
-        $displayInfo          = $helper->renderCurrent('default');
-        $this->assertEquals($displayInfoAssertion, $displayInfo);
-
-        $displayInfoAssertion = '<div><ul>'
-            . '<li class="foo-bar foo-baz">bar-info</li>'
-            . '</ul></div>';
-        $displayInfo          = $helper->renderCurrent('info');
+        $displayInfo          = $helper->renderCurrent();
         $this->assertEquals($displayInfoAssertion, $displayInfo);
 
         $displayInfoAssertion = '<ul class="warning">'
@@ -611,5 +599,36 @@ class FlashMessengerTest extends TestCase
             . '</ul>';
         $displayInfo          = $helper->renderCurrent('warning');
         $this->assertEquals($displayInfoAssertion, $displayInfo);
+    }
+
+    /**
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     */
+    public function testCustomNamespaceMessageFormatByConfig(): void
+    {
+        $config   = [
+            'view_helper_config' => [
+                'flashmessenger' => [
+                    'foo-bar' => [
+                        'message_open_format'      => '<div><ul><li%s>',
+                        'message_separator_string' => '</li><li%s>',
+                        'message_close_string'     => '</li></ul></div>',
+                        'classes'                  => 'foo-bar foo-bar',
+                    ],
+                ],
+            ],
+        ];
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
+
+        $helper->getPluginFlashMessenger()->addMessage('foo', 'foo-bar');
+        $helper->getPluginFlashMessenger()->addMessage('bar', 'foo-bar');
+
+        $displayAssertion = '<div><ul>'
+            . '<li class="foo-bar foo-bar">foo</li>'
+            . '<li class="foo-bar foo-bar">bar</li>'
+            . '</ul></div>';
+        $display          = $helper->renderCurrent('foo-bar');
+        $this->assertEquals($displayAssertion, $display);
     }
 }
