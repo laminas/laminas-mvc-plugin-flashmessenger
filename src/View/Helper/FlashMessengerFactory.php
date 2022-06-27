@@ -118,17 +118,14 @@ class FlashMessengerFactory implements FactoryInterface
      */
     private function isArrayOneDimensional(array $array): bool
     {
-        $isArrayOneDimensional = true;
-
-        /** @var string|array $property */
+        /** @var mixed $property */
         foreach ($array as $property) {
             if (is_array($property)) {
-                $isArrayOneDimensional = false;
-                break;
+                return false;
             }
         }
 
-        return $isArrayOneDimensional;
+        return true;
     }
 
     /**
