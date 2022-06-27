@@ -96,7 +96,7 @@ class FlashMessenger extends AbstractHelper
      *
      * @var array<string, FlashMessengerNamespace> $namespaces
      */
-    private $namespaces = [];
+    private array $namespaces = [];
 
     /**
      * @param array<string, FlashMessengerNamespace> $namespaces
