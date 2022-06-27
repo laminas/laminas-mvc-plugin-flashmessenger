@@ -564,4 +564,71 @@ class FlashMessengerTest extends TestCase
         $display          = $this->helper->renderCurrent('default');
         $this->assertSame($displayAssertion, $display);
     }
+
+    /**
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     */
+    public function testNamespaceMessageFormatByConfig(): void
+    {
+        $this->seedMessages();
+
+        $config   = [
+            'view_helper_config' => [
+                'flashmessenger' => [
+                    'default' => [
+                        'message_open_format'      => '<div><ul><li%s>',
+                        'message_separator_string' => '</li><li%s>',
+                        'message_close_string'     => '</li></ul></div>',
+                        'classes'                  => 'foo-baz foo-bar',
+                    ],
+                ],
+            ],
+        ];
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
+
+        $displayInfoAssertion = '<div><ul>'
+            . '<li class="foo-baz foo-bar">foo</li>'
+            . '<li class="foo-baz foo-bar">bar</li>'
+            . '</ul></div>';
+        $displayInfo          = $helper->renderCurrent();
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+
+        $displayInfoAssertion = '<ul class="warning">'
+            . '<li>bar-warning</li>'
+            . '</ul>';
+        $displayInfo          = $helper->renderCurrent('warning');
+        $this->assertEquals($displayInfoAssertion, $displayInfo);
+    }
+
+    /**
+     * @covers \Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger::renderCurrent
+     */
+    public function testCustomNamespaceMessageFormatByConfig(): void
+    {
+        $config   = [
+            'view_helper_config' => [
+                'flashmessenger' => [
+                    'foo-bar' => [
+                        'message_open_format'      => '<div><ul><li%s>',
+                        'message_separator_string' => '</li><li%s>',
+                        'message_close_string'     => '</li></ul></div>',
+                        'classes'                  => 'foo-bar foo-bar',
+                    ],
+                ],
+            ],
+        ];
+        $services = $this->createServiceManager($config);
+        $helper   = $this->retrieveViewHelperFrom($services);
+
+        $helper->getPluginFlashMessenger()->addMessage('foo', 'foo-bar');
+        $helper->getPluginFlashMessenger()->addMessage('bar', 'foo-bar');
+
+        $displayAssertion = '<div><ul>'
+            . '<li class="foo-bar foo-bar">foo</li>'
+            . '<li class="foo-bar foo-bar">bar</li>'
+            . '</ul></div>';
+        $display          = $helper->renderCurrent('foo-bar');
+        $this->assertEquals($displayAssertion, $display);
+    }
 }
