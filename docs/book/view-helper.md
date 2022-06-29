@@ -1,7 +1,6 @@
 # FlashMessenger View Helper
 
-The `FlashMessenger` helper is used to render the messages of the
-[FlashMessenger controller plugin](controller-plugin.md).
+The `FlashMessenger` view helper is used to render the messages of the [FlashMessenger controller plugin](controller-plugin.md).
 
 ## Basic Usage
 
