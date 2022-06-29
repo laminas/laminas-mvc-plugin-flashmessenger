@@ -145,26 +145,21 @@ data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
 ],
 ```
 
-## IDE auto-completion in templates
-
-The `Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to
-provide auto-completion for modern IDEs. It defines the aliases of the view
-helpers in a DocBlock as `@method` tags.
-
-### Usage
-
-In order to allow auto-completion in templates, `$this` variable should be
-type-hinted via a DocBlock at the top of your template. It is recommended that
-you always add the `Laminas\View\Renderer\PhpRenderer` as the first type, so that
-the IDE can auto-suggest the default view helpers from `laminas-view`. Next, chain
-the `HelperTrait` from `laminas-i18n` with a pipe symbol (a.k.a. vertical bar) `|`:
-
-```php
-/**
- * @var Laminas\View\Renderer\PhpRenderer|Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
- */
-```
-
-You may chain as many `HelperTrait` traits as you like, depending on view
-helpers from which Laminas component you are using and would like to
-provide auto-completion for.
+<!-- markdownlint-disable MD001 -->
+> TIP: **IDE Auto-Completion in Templates**
+> The `Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to provide auto-completion for modern IDEs. It defines the aliases of the view helpers in a DocBlock as `@method` tags.
+>
+> ### Usage
+>
+> In order to allow auto-completion in templates, `$this` variable should be type-hinted via a DocBlock at the top of a template.
+> It is recommended that always the `Laminas\View\Renderer\PhpRenderer` is added as the first type, so that the IDE can auto-suggest the default view helpers from `laminas-view`.
+> The `HelperTrait` from `laminas-mvc-plugin-flashmessenger` can be chained with a pipe symbol (a.k.a. vertical bar) `|`:
+>
+> ```php
+> /**
+>  * @var Laminas\View\Renderer\PhpRenderer|Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
+>  */
+> ```
+>
+> The `HelperTrait` traits can be chained as many as needed, depending on which view helpers from the different Laminas component are used and where the auto-completion is to be made.
+<!-- markdownlint-restore -->
