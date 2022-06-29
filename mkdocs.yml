@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - Introduction: introduction.md
     - Installation: installation.md
+    - "Basic Usage": basic-usage.md
     - "Controller Plugin": controller-plugin.md
     - "View Helper": view-helper.md
 site_name: laminas-mvc-plugin-flashmessenger
