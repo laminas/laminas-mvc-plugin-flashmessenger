@@ -58,7 +58,6 @@ distinct visuals for your flash messages. The default output format is defined
 within the source code of the `FlashMessenger` view helper itself.
 
 ```php
-// Laminas/View/Helper/FlashMessenger.php#L41-L43
 protected $messageCloseString     = '</li></ul>';
 protected $messageOpenFormat      = '<ul%s><li>';
 protected $messageSeparatorString = '</li><li>';
