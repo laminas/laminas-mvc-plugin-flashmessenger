@@ -85,18 +85,21 @@ current namespace within the session container.
 ```php
 public function processAction()
 {
-    // ... do some work ...
+    // Do some work…
+    
     $this->flashMessenger()->addMessage('You are now logged in.');
+    
     return $this->redirect()->toRoute('user-success');
 }
 
 public function successAction()
 {
     $return = ['success' => true];
-    $flashMessenger = $this->flashMessenger();
-    if ($flashMessenger->hasMessages()) {
-        $return['messages'] = $flashMessenger->getMessages();
+    
+    if ($this->flashMessenger()->hasMessages()) {
+        $return['messages'] = $this->flashMessenger()->getMessages();
     }
+    
     return $return;
 }
 ```
