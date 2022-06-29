@@ -86,63 +86,6 @@ The above code sample then would then generate the following output:
 </div>
 ```
 
-## Sample Modification for Twitter Bootstrap 3
-
-Taking all the above knowledge into account, we can create a nice, highly usable
-and user-friendly rendering strategy using the
-[Bootstrap front-end framework](http://getbootstrap.com/) version 3 layouts:
-
-```php
-// In any of your .phtml files:
-$flash = $this->flashMessenger();
-$flash->setMessageOpenFormat('<div%s>
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-        &times;
-    </button>
-    <ul><li>')
-    ->setMessageSeparatorString('</li><li>')
-    ->setMessageCloseString('</li></ul></div>');
-
-echo $flash->render('error',   ['alert', 'alert-dismissible', 'alert-danger']);
-echo $flash->render('info',    ['alert', 'alert-dismissible', 'alert-info']);
-echo $flash->render('default', ['alert', 'alert-dismissible', 'alert-warning']);
-echo $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']);
-```
-
-The output of the above example would create dismissable `FlashMessages` with
-the following HTML markup. The example only covers one type of `FlashMessenger`
-output; if you would have several `FlashMessages` available in each of the
-rendered `namespaces`, then you would receive the same output multiple times
-only having different CSS classes applied.
-
-```html
-<div class="alert alert-dismissable alert-success">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <ul>
-        <li>Some FlashMessenger Content</li>
-        <li>You, who's reading the docs, are AWESOME!</li>
-    </ul>
-</div>
-```
-
-## Alternative Configuration of the ViewHelper Layout
-
-`Laminas\View\Helper\Service\FlashMessengerFactory` checks the application
-configuration, making it possible to set up the `FlashMessenger` strings through
-your `module.config.php`, too. The next example will set up the output to be
-identical with the above Twitter Bootstrap 3 Example
-
-```php
-'view_helper_config' => [
-    'flashmessenger' => [
-        'message_open_format'      => '<div%s><button type="button" class="close"
-data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
-        'message_close_string'     => '</li></ul></div>',
-        'message_separator_string' => '</li><li>',
-    ],
-],
-```
-
 <!-- markdownlint-disable MD001 -->
 > TIP: **IDE Auto-Completion in Templates**
 > The `Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait` trait can be used to provide auto-completion for modern IDEs. It defines the aliases of the view helpers in a DocBlock as `@method` tags.

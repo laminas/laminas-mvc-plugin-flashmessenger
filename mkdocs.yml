@@ -7,6 +7,9 @@ nav:
     - "Basic Usage": basic-usage.md
     - "Controller Plugin": controller-plugin.md
     - "View Helper": view-helper.md
+    - Cookbook:
+          - "Set Application-Wide Layout": cookbook/application-wide-layout.md
+          - "Use Alerts from Bootstrap": cookbook/bootstrap.md
 site_name: laminas-mvc-plugin-flashmessenger
 site_description: 'Plugin for creating and exposing flash messages via laminas-mvc controllers'
 repo_url: 'https://github.com/laminas/laminas-mvc-plugin-flashmessenger'
