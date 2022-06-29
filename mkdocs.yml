@@ -2,6 +2,7 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
+    - Installation: installation.md
     - "Controller Plugin": controller-plugin.md
     - "View Helper": view-helper.md
 site_name: laminas-mvc-plugin-flashmessenger
@@ -10,3 +11,5 @@ repo_url: 'https://github.com/laminas/laminas-mvc-plugin-flashmessenger'
 extra:
     project: MVC
     show_special_homepage: true
+    installation:
+        module_class: 'Laminas\Mvc\Plugin\FlashMessenger\Module'
