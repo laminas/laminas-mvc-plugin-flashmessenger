@@ -19,6 +19,9 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.99"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
@@ -37,8 +40,8 @@
         "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-i18n": "^2.13.0",
         "phpunit/phpunit": "^9.5.4",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.18"
+        "psalm/plugin-phpunit": "^0.17.0",
+        "vimeo/psalm": "^4.24.0"
     },
     "conflict": {
         "laminas/laminas-mvc": "<3.0.0",
