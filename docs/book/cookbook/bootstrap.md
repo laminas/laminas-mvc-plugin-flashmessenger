@@ -2,7 +2,7 @@
 
 To use the syntax of the [alerts from the Bootstrap CSS framework](https://getbootstrap.com/docs/5.2/components/alerts/) for the output of the view helper, the configuration of the message format must be adjusted.
 
-Add the following lines to the local or global configuration file, e.g. `config/autoload/global.config.php`:
+To do that, add the following lines to the local or global configuration file, e.g. `config/autoload/global.config.php`:
 
 ```php
 return [

@@ -1,25 +1,25 @@
 # Introduction
 
 Giving feedback to a user is an important part of a good application.
-Flash messages are used to notify the user about a successful form submit, failure on saving in the database, wrong authentification credentials or something similar.
-At the end of a request, a message is created and shown to the user at the next request.
-The flash messages are self-expiring and session-based.
+Flash messages provide notifications to the user, such as for successful form submissions, failure to save data in the database, and incorrect authentication credentials.
+A message is created at the end of one request, and shown to the user in the next request.
+Flash messages are self-expiring and session-based.
 
-To create and expose flash messages in a laminas-mvc-based application this packages provides:
+To create and expose flash messages in a laminas-mvc-based application, this packages provides:
 
 - [a controller plugin to create and retrieve messages](controller-plugin.md)
 - [a view helper to render the messages](view-helper.md)
 
-A message is set in a controller and then rendered in a view script.
+A flash message is set in a controller and then rendered in a view script.
 
 ## Namespaces
 
-The controller plugin and the view helper supports different types of messages:
+The controller plugin and the view helper support different types of messages:
 
-- default
-- success
-- warning
-- error
-- info
+- `default`
+- `info`
+- `success`
+- `warning`
+- `error`
 
-These namespaces allow to handle different output formats.
+These namespaces provide support for handling different output formats.

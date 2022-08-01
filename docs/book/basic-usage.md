@@ -1,10 +1,10 @@
 # Basic Usage
 
-In the following example, a flash message is set in an edit action and the rendering is done after a redirect.
+In the following example, a flash message is set in a controller action and the rendering is done after a redirect.
 
 ## Create a Flash Message
 
-Set a message to the messenger in a controller action, e.g. `module/Album/Controller/AlbumController.php`:
+Store a message in the messenger of a controller action, e.g. `module/Album/Controller/AlbumController.php`:
 
 ```php
 namespace Album\Controller;

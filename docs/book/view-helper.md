@@ -54,7 +54,7 @@ look like this:
 Aside from modifying the rendered CSS classes of the `FlashMessenger`, you are
 furthermore able to modify the generated HTML as a whole to create even more
 distinct visuals for your flash messages. The default output format is defined
-within the source code of the `FlashMessenger` view helper itself.
+within the source code of the `FlashMessenger` view helper.
 
 ```php
 protected $messageCloseString     = '</li></ul>';

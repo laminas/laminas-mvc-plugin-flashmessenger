@@ -1,11 +1,11 @@
 # Set Application-Wide Layout
 
-The format for the view helper `FlashMessenger` can be configured for an entire application and all uses of the helper.
+The format for the `FlashMessenger` view helper can be configured for an entire application as well as all uses of the helper.
 
 `Laminas\View\Helper\Service\FlashMessengerFactory` checks the application
 configuration and creates the view helper with the given format options.
 
-## Set Format for All Namespaces
+## Set the Format for All Namespaces
 
 Add the following lines to the local or global configuration file, e.g. `config/autoload/global.config.php`:
 
