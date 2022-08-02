@@ -13,10 +13,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-mvc-plugin-flashmessenger">
 
-    
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-mvc-plugin-flashmessenger/cookbook/application-wide-layout/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>laminas-mvc-plugin-flashmessenger - Laminas Docs</title>
+    <title>Set Application-Wide Layout - laminas-mvc-plugin-flashmessenger - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -122,7 +122,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../.">laminas-mvc-plugin-flashmessenger</a>
+            <a href="../..">laminas-mvc-plugin-flashmessenger</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -137,7 +137,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                                <a href="../../introduction/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -151,7 +151,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                                <a href="../../installation/" class="subnavigation__link">Installation</a>
                             </li>
                         
                     
@@ -165,7 +165,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                                <a href="../../basic-usage/" class="subnavigation__link">Basic Usage</a>
                             </li>
                         
                     
@@ -179,7 +179,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
+                                <a href="../../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
                             </li>
                         
                     
@@ -193,7 +193,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../view-helper/" class="subnavigation__link">View Helper</a>
+                                <a href="../../view-helper/" class="subnavigation__link">View Helper</a>
                             </li>
                         
                     
@@ -211,14 +211,14 @@
                                 <ul class="subnavigation__list">
                                     
                                         
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Set Application-Wide Layout</a>
     </li>
 
                                     
                                         
     <li class="subnavigation__list-item ">
-        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+        <a href="../bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
     </li>
 
                                     
@@ -289,21 +289,168 @@
                 
                 
                     
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#set-the-format-for-all-namespaces" class="toc__link nav-link">Set the Format for All Namespaces</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#set-formats-individually-for-namespaces" class="toc__link nav-link">Set Formats Individually for Namespaces</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
                 
 
                 
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/">Overview</a></li>
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/mvc/">MVC</a></li>
 
-<h1 class="content__title">404</h1>
-<blockquote>
-    <h3>Something went wrong!</h3>
-    <p>
-        We're sorry, but the page you are looking for does not exist.
-    </p>
-</blockquote>
+            
+                <li class="breadcrumb-item"><a href="../..">laminas-mvc-plugin-flashmessenger</a></li>
 
-<a href="../." class="btn btn-default" role="button">Go to homepage</a>
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Cookbook</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Set Application-Wide Layout</li>
+            
+        
+    </ol>
+</nav>
 
 
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Cookbook</h2>
+    
+
+    <h1 id="set-application-wide-layout">Set Application-Wide Layout</h1>
+<p>The format for the <code>FlashMessenger</code> view helper can be configured for an entire application as well as all uses of the helper.</p>
+<p><code>Laminas\View\Helper\Service\FlashMessengerFactory</code> checks the application
+configuration and creates the view helper with the given format options.</p>
+<h2 id="set-the-format-for-all-namespaces">Set the Format for All Namespaces</h2>
+<p>Add the following lines to the local or global configuration file, e.g. <code>config/autoload/global.config.php</code>:</p>
+<pre class="highlight"><code class="language-php">return [
+    'view_helper_config' =&gt; [
+        'flashmessenger' =&gt; [
+            'message_open_format'      =&gt; '&lt;p%s&gt;',
+            'message_close_string'     =&gt; '&lt;/p&gt;',
+            'message_separator_string' =&gt; '&lt;br&gt;',
+        ],
+    ],
+];</code></pre>
+<h2 id="set-formats-individually-for-namespaces">Set Formats Individually for Namespaces</h2>
+<div class="admonition info">
+<p class="admonition-title">New Feature</p>
+<p>
+Available since version 1.8.0</p>
+</div>
+<p>Add the following lines to the local or global configuration file, e.g. <code>config/autoload/global.config.php</code>:</p>
+<pre class="highlight"><code class="language-php">return [
+    'view_helper_config' =&gt; [
+        'flashmessenger' =&gt; [
+            'default' =&gt; [
+                'message_open_format'      =&gt; '&lt;p%s&gt;',
+                'message_close_string'     =&gt; '&lt;/p&gt;',
+                'message_separator_string' =&gt; '&lt;br&gt;',
+                'classes'                  =&gt; 'custom-default example-class',
+            ],
+            'success' =&gt; [
+                'message_open_format'      =&gt; '&lt;p%s&gt;',
+                'message_close_string'     =&gt; '&lt;/p&gt;',
+                'message_separator_string' =&gt; '&lt;br&gt;',
+                'classes'                  =&gt; 'custom-success example-class',
+            ],
+            'warning' =&gt; [
+                 // …
+            ],
+            'error'   =&gt; [
+                 // …
+            ],
+            'info'    =&gt; [
+                 // …
+            ],
+        ],
+    ],
+];</code></pre>
+<p>If the default unordered list should be retained, then set only the classes:</p>
+<pre class="highlight"><code class="language-php">return [
+    'view_helper_config' =&gt; [
+        'flashmessenger' =&gt; [
+            'default' =&gt; [
+                'classes' =&gt; 'custom-default',
+            ],
+            'success' =&gt; [
+                'classes' =&gt; 'custom-success',
+            ],
+            'warning' =&gt; [
+                'classes' =&gt; 'custom-warning',
+            ],
+            'error'   =&gt; [
+                'classes' =&gt; 'custom-error',
+            ],
+            'info'    =&gt; [
+                'classes' =&gt; 'custom-info',
+            ],
+        ],
+    ],
+];</code></pre>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../view-helper/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    View Helper
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../bootstrap/">
+                    <small class="page-nav__label">Next</small>
+                    Use Alerts from Bootstrap
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 <div class="donation-banner">
@@ -326,7 +473,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="../.">laminas-mvc-plugin-flashmessenger</a>
+            <a href="../..">laminas-mvc-plugin-flashmessenger</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -341,7 +488,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                                <a href="../../introduction/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -355,7 +502,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                                <a href="../../installation/" class="subnavigation__link">Installation</a>
                             </li>
                         
                     
@@ -369,7 +516,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                                <a href="../../basic-usage/" class="subnavigation__link">Basic Usage</a>
                             </li>
                         
                     
@@ -383,7 +530,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
+                                <a href="../../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
                             </li>
                         
                     
@@ -397,7 +544,7 @@
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../view-helper/" class="subnavigation__link">View Helper</a>
+                                <a href="../../view-helper/" class="subnavigation__link">View Helper</a>
                             </li>
                         
                     
@@ -415,14 +562,14 @@
                                 <ul class="subnavigation__list">
                                     
                                         
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Set Application-Wide Layout</a>
     </li>
 
                                     
                                         
     <li class="subnavigation__list-item ">
-        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+        <a href="../bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
     </li>
 
                                     
@@ -518,13 +665,13 @@
 </footer>
 
     <script>
-        let base_url = '..',
+        let base_url = '../..',
             project  = "mvc",
             siteName = 'laminas-mvc-plugin-flashmessenger';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="../search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     

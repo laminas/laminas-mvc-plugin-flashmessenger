@@ -137,6 +137,48 @@
                     
                         
                             <li class="subnavigation__list-item ">
+                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
                                 <a href="../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
                             </li>
                         
@@ -152,6 +194,35 @@
                         
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">View Helper</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+    </li>
+
+                                    
+                                </ul>
                             </li>
                         
                     
@@ -238,18 +309,6 @@
                         <a href="#html-layout" class="toc__link nav-link">HTML Layout</a>
                     </li>
                 
-                    <li class="toc__entry">
-                        <a href="#sample-modification-for-twitter-bootstrap-3" class="toc__link nav-link">Sample Modification for Twitter Bootstrap 3</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#alternative-configuration-of-the-viewhelper-layout" class="toc__link nav-link">Alternative Configuration of the ViewHelper Layout</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#ide-auto-completion-in-templates" class="toc__link nav-link">IDE auto-completion in templates</a>
-                    </li>
-                
             </ul>
         </div>
     
@@ -283,8 +342,7 @@
     
 
     <h1 id="flashmessenger-view-helper">FlashMessenger View Helper</h1>
-<p>The <code>FlashMessenger</code> helper is used to render the messages of the
-<a href="../controller-plugin/">FlashMessenger controller plugin</a>.</p>
+<p>The <code>FlashMessenger</code> view helper is used to render the messages of the <a href="../controller-plugin/">FlashMessenger controller plugin</a>.</p>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>When only using the default <code>namespace</code> for the <code>FlashMessenger</code>, you can do the
 following:</p>
@@ -318,9 +376,8 @@ look like this:</p>
 <p>Aside from modifying the rendered CSS classes of the <code>FlashMessenger</code>, you are
 furthermore able to modify the generated HTML as a whole to create even more
 distinct visuals for your flash messages. The default output format is defined
-within the source code of the <code>FlashMessenger</code> view helper itself.</p>
-<pre class="highlight"><code class="language-php">// Laminas/View/Helper/FlashMessenger.php#L41-L43
-protected $messageCloseString     = '&lt;/li&gt;&lt;/ul&gt;';
+within the source code of the <code>FlashMessenger</code> view helper.</p>
+<pre class="highlight"><code class="language-php">protected $messageCloseString     = '&lt;/li&gt;&lt;/ul&gt;';
 protected $messageOpenFormat      = '&lt;ul%s&gt;&lt;li&gt;';
 protected $messageSeparatorString = '&lt;/li&gt;&lt;li&gt;';</code></pre>
 <p>These defaults exactly match what we're trying to do. The placeholder <code>%s</code> will
@@ -338,65 +395,21 @@ echo $this-&gt;flashMessenger()
     &lt;p&gt;Some FlashMessenger Content&lt;/p&gt;
     &lt;p&gt;You, who's reading the docs, are AWESOME!&lt;/p&gt;
 &lt;/div&gt;</code></pre>
-<h2 id="sample-modification-for-twitter-bootstrap-3">Sample Modification for Twitter Bootstrap 3</h2>
-<p>Taking all the above knowledge into account, we can create a nice, highly usable
-and user-friendly rendering strategy using the
-<a href="http://getbootstrap.com/">Bootstrap front-end framework</a> version 3 layouts:</p>
-<pre class="highlight"><code class="language-php">// In any of your .phtml files:
-$flash = $this-&gt;flashMessenger();
-$flash-&gt;setMessageOpenFormat('&lt;div%s&gt;
-    &lt;button type="button" class="close" data-dismiss="alert" aria-hidden="true"&gt;
-        &amp;times;
-    &lt;/button&gt;
-    &lt;ul&gt;&lt;li&gt;')
-    -&gt;setMessageSeparatorString('&lt;/li&gt;&lt;li&gt;')
-    -&gt;setMessageCloseString('&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;');
-
-echo $flash-&gt;render('error',   ['alert', 'alert-dismissible', 'alert-danger']);
-echo $flash-&gt;render('info',    ['alert', 'alert-dismissible', 'alert-info']);
-echo $flash-&gt;render('default', ['alert', 'alert-dismissible', 'alert-warning']);
-echo $flash-&gt;render('success', ['alert', 'alert-dismissible', 'alert-success']);</code></pre>
-<p>The output of the above example would create dismissable <code>FlashMessages</code> with
-the following HTML markup. The example only covers one type of <code>FlashMessenger</code>
-output; if you would have several <code>FlashMessages</code> available in each of the
-rendered <code>namespaces</code>, then you would receive the same output multiple times
-only having different CSS classes applied.</p>
-<pre class="highlight"><code class="language-html">&lt;div class="alert alert-dismissable alert-success"&gt;
-    &lt;button type="button" class="close" data-dismiss="alert" aria-hidden="true"&gt;×&lt;/button&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Some FlashMessenger Content&lt;/li&gt;
-        &lt;li&gt;You, who's reading the docs, are AWESOME!&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</code></pre>
-<h2 id="alternative-configuration-of-the-viewhelper-layout">Alternative Configuration of the ViewHelper Layout</h2>
-<p><code>Laminas\View\Helper\Service\FlashMessengerFactory</code> checks the application
-configuration, making it possible to set up the <code>FlashMessenger</code> strings through
-your <code>module.config.php</code>, too. The next example will set up the output to be
-identical with the above Twitter Bootstrap 3 Example</p>
-<pre class="highlight"><code class="language-php">'view_helper_config' =&gt; [
-    'flashmessenger' =&gt; [
-        'message_open_format'      =&gt; '&lt;div%s&gt;&lt;button type="button" class="close"
-data-dismiss="alert" aria-hidden="true"&gt;&amp;times;&lt;/button&gt;&lt;ul&gt;&lt;li&gt;',
-        'message_close_string'     =&gt; '&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;',
-        'message_separator_string' =&gt; '&lt;/li&gt;&lt;li&gt;',
-    ],
-],</code></pre>
-<h2 id="ide-auto-completion-in-templates">IDE auto-completion in templates</h2>
-<p>The <code>Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait</code> trait can be used to
-provide auto-completion for modern IDEs. It defines the aliases of the view
-helpers in a DocBlock as <code>@method</code> tags.</p>
+<!-- markdownlint-disable MD001 -->
+<div class="admonition tip">
+<p class="admonition-title">IDE Auto-Completion in Templates</p>
+<p>
+The <code>Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait</code> trait can be used to provide auto-completion for modern IDEs. It defines the aliases of the view helpers in a DocBlock as <code>@method</code> tags.</p>
 <h3 id="usage">Usage</h3>
-<p>In order to allow auto-completion in templates, <code>$this</code> variable should be
-type-hinted via a DocBlock at the top of your template. It is recommended that
-you always add the <code>Laminas\View\Renderer\PhpRenderer</code> as the first type, so that
-the IDE can auto-suggest the default view helpers from <code>laminas-view</code>. Next, chain
-the <code>HelperTrait</code> from <code>laminas-i18n</code> with a pipe symbol (a.k.a. vertical bar) <code>|</code>:</p>
+<p>In order to allow auto-completion in templates, <code>$this</code> variable should be type-hinted via a DocBlock at the top of a template.
+It is recommended that always the <code>Laminas\View\Renderer\PhpRenderer</code> is added as the first type, so that the IDE can auto-suggest the default view helpers from <code>laminas-view</code>.
+The <code>HelperTrait</code> from <code>laminas-mvc-plugin-flashmessenger</code> can be chained with a pipe symbol (a.k.a. vertical bar) <code>|</code>:</p>
 <pre class="highlight"><code class="language-php">/**
  * @var Laminas\View\Renderer\PhpRenderer|Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait $this
  */</code></pre>
-<p>You may chain as many <code>HelperTrait</code> traits as you like, depending on view
-helpers from which Laminas component you are using and would like to
-provide auto-completion for.</p>
+<p>The <code>HelperTrait</code> traits can be chained as many as needed, depending on which view helpers from the different Laminas component are used and where the auto-completion is to be made.</p>
+</div>
+<!-- markdownlint-restore -->
 
 
 
@@ -417,6 +430,12 @@ provide auto-completion for.</p>
 
         
         <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../cookbook/application-wide-layout/">
+                    <small class="page-nav__label">Next</small>
+                    Set Application-Wide Layout
+                    <i class="fa fa-chevron-right"></i>
+                </a>
             
         </li>
     </ul>
@@ -462,6 +481,48 @@ provide auto-completion for.</p>
                     
                         
                             <li class="subnavigation__list-item ">
+                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
                                 <a href="../controller-plugin/" class="subnavigation__link">Controller Plugin</a>
                             </li>
                         
@@ -477,6 +538,35 @@ provide auto-completion for.</p>
                         
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">View Helper</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+    </li>
+
+                                    
+                                </ul>
                             </li>
                         
                     
@@ -548,7 +638,7 @@ provide auto-completion for.</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-mvc-plugin-flashmessengerblob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -557,7 +647,7 @@ provide auto-completion for.</p>
                         <h4 class="footer__headline">Copyright</h4>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
-                            <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessengergraphs/contributors">contributors</a>.<br>-->
+                            <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger/graphs/contributors">contributors</a>.<br>-->
                             &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>

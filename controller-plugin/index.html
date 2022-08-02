@@ -136,6 +136,48 @@
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Controller Plugin</a>
                             </li>
@@ -152,6 +194,35 @@
                         
                             <li class="subnavigation__list-item ">
                                 <a href="../view-helper/" class="subnavigation__link">View Helper</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+    </li>
+
+                                    
+                                </ul>
                             </li>
                         
                     
@@ -370,18 +441,21 @@ current namespace within the session container.</p>
 <h2 id="example">Example</h2>
 <pre class="highlight"><code class="language-php">public function processAction()
 {
-    // ... do some work ...
+    // Do some work…
+
     $this-&gt;flashMessenger()-&gt;addMessage('You are now logged in.');
+
     return $this-&gt;redirect()-&gt;toRoute('user-success');
 }
 
 public function successAction()
 {
     $return = ['success' =&gt; true];
-    $flashMessenger = $this-&gt;flashMessenger();
-    if ($flashMessenger-&gt;hasMessages()) {
-        $return['messages'] = $flashMessenger-&gt;getMessages();
+
+    if ($this-&gt;flashMessenger()-&gt;hasMessages()) {
+        $return['messages'] = $this-&gt;flashMessenger()-&gt;getMessages();
     }
+
     return $return;
 }</code></pre>
 
@@ -394,10 +468,10 @@ public function successAction()
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="..">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../basic-usage/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Home
+                    Basic Usage
                 </a>
             
         </li>
@@ -454,6 +528,48 @@ public function successAction()
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../introduction/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Controller Plugin</a>
                             </li>
@@ -470,6 +586,35 @@ public function successAction()
                         
                             <li class="subnavigation__list-item ">
                                 <a href="../view-helper/" class="subnavigation__link">View Helper</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/application-wide-layout/" class="subnavigation__link">Set Application-Wide Layout</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/bootstrap/" class="subnavigation__link">Use Alerts from Bootstrap</a>
+    </li>
+
+                                    
+                                </ul>
                             </li>
                         
                     
@@ -541,7 +686,7 @@ public function successAction()
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-mvc-plugin-flashmessengerblob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -550,7 +695,7 @@ public function successAction()
                         <h4 class="footer__headline">Copyright</h4>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
-                            <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessengergraphs/contributors">contributors</a>.<br>-->
+                            <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger/graphs/contributors">contributors</a>.<br>-->
                             &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
