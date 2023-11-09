@@ -30,10 +30,10 @@ class AlbumController extends AbstractActionController
 
 ## Render a Flash Message
 
-Render all flash messages in a view script, e.g. `module/Album/view/album/album/index.phtml`:
+Render success type of flash messages in a view script, e.g. `module/Album/view/album/album/index.phtml`:
 
 ```php
-<?= $this->flashMessenger()->render() ?>
+<?= $this->flashMessenger()->render(FlashMessenger::NAMESPACE_SUCCESS) ?>
 ```
 
 Output:
