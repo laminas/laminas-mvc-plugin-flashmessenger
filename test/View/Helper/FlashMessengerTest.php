@@ -9,7 +9,6 @@ use Laminas\Mvc\Controller\PluginManager;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger as PluginFlashMessenger;
 use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessenger;
 use Laminas\Mvc\Plugin\FlashMessenger\View\Helper\FlashMessengerFactory;
-use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\HelperPluginManager;
@@ -58,7 +57,7 @@ class FlashMessengerTest extends TestCase
 
     private function createServiceManager(array $config = []): ServiceManager
     {
-        $config = new Config([
+        $sm = new ServiceManager([
             'services'  => [
                 'config' => $config,
             ],
@@ -81,8 +80,6 @@ class FlashMessengerTest extends TestCase
                 ]),
             ],
         ]);
-        $sm     = new ServiceManager();
-        $config->configureServiceManager($sm);
         return $sm;
     }
 
