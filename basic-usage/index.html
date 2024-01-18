@@ -274,7 +274,7 @@
                         <i class="fa fa-search"></i> Search
                     </a>
                     <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger" class="header__link header__link--github" title="Go to repository of laminas-mvc-plugin-flashmessenger">
-                        <i class="fa fa-github"></i> GitHub
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 
             </div>
@@ -303,6 +303,14 @@
                 
                     <li class="toc__entry">
                         <a href="#render-a-flash-message" class="toc__link nav-link">Render a Flash Message</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#usage-of-namespaces" class="toc__link nav-link">Usage of Namespaces</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#learn-more" class="toc__link nav-link">Learn More</a>
                     </li>
                 
             </ul>
@@ -338,7 +346,9 @@
     
 
     <h1 id="basic-usage">Basic Usage</h1>
-<p>In the following example, a flash message is set in a controller action and the rendering is done after a redirect.</p>
+<p>A typical use case is to set a flash message in a controller action and render it in a view script after a redirect.
+The following example shows the use of a success message.</p>
+<p>Before starting, make sure laminas-mvc-plugin-flashmessenger is <a href="../installation/">installed and configured</a>.</p>
 <h2 id="create-a-flash-message">Create a Flash Message</h2>
 <p>Store a message in the messenger of a controller action, e.g. <code>module/Album/Controller/AlbumController.php</code>:</p>
 <pre class="highlight"><code class="language-php">namespace Album\Controller;
@@ -361,10 +371,97 @@ class AlbumController extends AbstractActionController
     }
 }</code></pre>
 <h2 id="render-a-flash-message">Render a Flash Message</h2>
-<p>Render all flash messages in a view script, e.g. <code>module/Album/view/album/album/index.phtml</code>:</p>
-<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render() ?&gt;</code></pre>
+<p>Render all added success messages in a view script, e.g. <code>module/Album/view/album/album/index.phtml</code>:</p>
+<!-- markdownlint-disable MD038 MD009 MD046 -->
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Name Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render('success') ?&gt;</code></pre>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Constant Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render(
+  Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_SUCCESS
+) ?&gt;</code></pre>
+</div>
+</div>
+<!-- markdownlint-restore -->
+
 <p>Output:</p>
 <pre class="highlight"><code class="language-html">&lt;ul class="success"&gt;&lt;li&gt;Album created successfully.&lt;/li&gt;&lt;/ul&gt;</code></pre>
+<h2 id="usage-of-namespaces">Usage of Namespaces</h2>
+<p>The flash messenger supports namespaces.
+This allows to render messages of different types in different places.</p>
+<h3 id="create-flash-messages-for-different-namespaces">Create Flash Messages for Different Namespaces</h3>
+<p>Store a <code>success</code> message in the messenger of a controller action:</p>
+<pre class="highlight"><code class="language-php">$this-&gt;flashMessenger()-&gt;addSuccessMessage('…');</code></pre>
+<p>Store an <code>info</code> message in the messenger of a controller action:</p>
+<pre class="highlight"><code class="language-php">$this-&gt;flashMessenger()-&gt;addInfoMessage('…');</code></pre>
+<p>Store a <code>warning</code> message in the messenger of a controller action:</p>
+<pre class="highlight"><code class="language-php">$this-&gt;flashMessenger()-&gt;addWarningMessage('…');</code></pre>
+<p>Store an <code>error</code> message in the messenger of a controller action:</p>
+<pre class="highlight"><code class="language-php">$this-&gt;flashMessenger()-&gt;addErrorMessage('…');</code></pre>
+<h3 id="render-flash-messages-for-different-namespaces">Render Flash Messages for Different Namespaces</h3>
+<p>Render all added <code>success</code> messages in a view script:</p>
+<!-- markdownlint-disable MD038 MD009 MD046 -->
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Name Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render('success') ?&gt;</code></pre>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Constant Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render(
+  Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_SUCCESS
+) ?&gt;</code></pre>
+</div>
+</div>
+<!-- markdownlint-restore -->
+
+<p>Render all added <code>info</code> messages in a view script:</p>
+<!-- markdownlint-disable MD038 MD009 MD046 -->
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Name Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render('info') ?&gt;</code></pre>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Constant Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render(
+  Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_INFO
+) ?&gt;</code></pre>
+</div>
+</div>
+<!-- markdownlint-restore -->
+
+<p>Render all added <code>warning</code> messages in a view script:</p>
+<!-- markdownlint-disable MD038 MD009 MD046 -->
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Name Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render('warning') ?&gt;</code></pre>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Constant Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render(
+  Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_WARNING
+) ?&gt;</code></pre>
+</div>
+</div>
+<!-- markdownlint-restore -->
+
+<p>Render all added <code>error</code> messages in a view script:</p>
+<!-- markdownlint-disable MD038 MD009 MD046 -->
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Name Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render('error') ?&gt;</code></pre>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Constant Usage</label><div class="tabbed-content">
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render(
+  Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger::NAMESPACE_ERROR
+) ?&gt;</code></pre>
+</div>
+</div>
+<!-- markdownlint-restore -->
+
+<h3 id="use-default-namespace">Use Default Namespace</h3>
+<p>The flash messenger supports a default namespace which does not represent an explicit status.</p>
+<p>Store a <code>default</code> message in the messenger of a controller action:</p>
+<pre class="highlight"><code class="language-php">$this-&gt;flashMessenger()-&gt;addMessage('…');</code></pre>
+<p>Render all added <code>default</code> messages in a view script:</p>
+<pre class="highlight"><code class="language-php">&lt;?= $this-&gt;flashMessenger()-&gt;render() ?&gt;</code></pre>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><a href="../controller-plugin/">The controller plugin</a></li>
+<li><a href="../view-helper/">The view helper</a></li>
+</ul>
 
 
 
@@ -571,13 +668,13 @@ class AlbumController extends AbstractActionController
                                 <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
                             </li>
                             <li class="support__list-item">
                                 <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
@@ -603,7 +700,7 @@ class AlbumController extends AbstractActionController
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-mvc-plugin-flashmessenger/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
