@@ -115,9 +115,6 @@ class FlashMessengerFactory implements FactoryInterface
         return $helper;
     }
 
-    /**
-     * @param array $array
-     */
     private function isArrayOneDimensional(array $array): bool
     {
         /** @var mixed $property */
