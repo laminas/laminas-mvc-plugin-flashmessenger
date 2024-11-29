@@ -155,7 +155,6 @@ class FlashMessenger extends AbstractHelper
      * Render Current Messages
      *
      * @param  string    $namespace
-     * @param  array     $classes
      * @param  bool|null $autoEscape
      * @return string
      */
