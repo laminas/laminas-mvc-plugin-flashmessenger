@@ -753,16 +753,16 @@
         },
         {
             "name": "laminas/laminas-session",
-            "version": "2.23.0",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-session.git",
-                "reference": "799aeb8c9fc42763966d9d18789f88e96280f7b4"
+                "reference": "487b6debacd3e029e27cbed7ce495b1328908dab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-session/zipball/799aeb8c9fc42763966d9d18789f88e96280f7b4",
-                "reference": "799aeb8c9fc42763966d9d18789f88e96280f7b4",
+                "url": "https://api.github.com/repos/laminas/laminas-session/zipball/487b6debacd3e029e27cbed7ce495b1328908dab",
+                "reference": "487b6debacd3e029e27cbed7ce495b1328908dab",
                 "shasum": ""
             },
             "require": {
@@ -832,7 +832,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2025-01-23T20:54:08+00:00"
+            "time": "2025-02-05T10:39:08+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
